@@ -1,0 +1,57 @@
+@model IEnumerable<NamedItemRow>
+@{
+    ViewData["Title"] = "Thể loại";
+    var search = ViewData["Search"] as string;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4 m-0">Thể loại</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Thêm thể loại</a>
+</div>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input name="search" value="@search" class="form-control" placeholder="Tìm theo tên thể loại..." />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-secondary">Tìm</button>
+        @if (!string.IsNullOrEmpty(search))
+        {
+            <a asp-action="Index" class="btn btn-link">Xóa lọc</a>
+        }
+    </div>
+</form>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr>
+            <th style="width:60px">#</th>
+            <th>Tên thể loại</th>
+            <th>Mô tả</th>
+            <th class="text-center" style="width:120px">Số đầu sách</th>
+            <th style="width:160px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td class="text-muted">@(item.Extra?.Length > 80 ? item.Extra[..80] + "…" : item.Extra)</td>
+                <td class="text-center">@item.BookCount</td>
+                <td class="text-end">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Sửa</a>
+                    <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="d-inline"
+                          onsubmit="return confirm('Bạn chắc chắn muốn xóa thể loại này?');">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        @if (!Model.Any())
+        {
+            <tr><td colspan="5" class="text-center text-muted py-4">Chưa có dữ liệu.</td></tr>
+        }
+    </tbody>
+</table>

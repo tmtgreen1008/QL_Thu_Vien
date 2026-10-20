@@ -1,0 +1,91 @@
+@model MyLoansVm
+@{
+    ViewData["Title"] = T["loans.title"];
+    var today = DateTime.Today;
+}
+
+<div class="row g-4">
+    <div class="col-md-3"><partial name="_Menu" /></div>
+
+    <div class="col-md-9">
+        <h1 class="h4 mb-3">@T["loans.title"] <span class="text-muted fs-6">(@Model.Items.Count)</span></h1>
+
+        <div id="loanAlert"></div>
+        <form id="ajaxToken">@Html.AntiForgeryToken()</form>
+
+        @if (!Model.Items.Any())
+        {
+            <div class="text-center text-muted py-5">@T["loans.none"]</div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>@T["loans.col.book"]</th><th>@T["loans.col.loandate"]</th><th>@T["loans.col.due"]</th>
+                            <th class="text-center">@T["loans.col.renewed"]</th><th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model.Items)
+                        {
+                            var left = (i.DueDate.Date - today).Days;
+                            var overdue = left < 0;
+                            var canRenew = Model.HasValidCard && !overdue && i.RenewCount < Model.MaxRenewals;
+                            <tr>
+                                <td>
+                                    <div class="fw-semibold">@i.Title</div>
+                                    <div class="small text-muted">@i.Author · <span class="font-monospace">@i.Barcode</span></div>
+                                </td>
+                                <td>@i.LoanDate.ToString("d")</td>
+                                <td class="@(overdue ? "text-danger fw-semibold" : "")">
+                                    <span class="due-date">@i.DueDate.ToString("d")</span>
+                                    <div class="small due-hint">
+                                        @if (overdue) { <span>@T["loans.overdue.days", -left]</span> }
+                                        else if (left == 0) { <span class="text-warning">@T["loans.today"]</span> }
+                                        else { <span class="text-muted">@T["loans.left", left]</span> }
+                                    </div>
+                                </td>
+                                <td class="text-center"><span class="renew-count">@i.RenewCount</span> / @Model.MaxRenewals</td>
+                                <td class="text-end">
+                                    @if (canRenew)
+                                    {
+                                        <form asp-action="Renew" method="post" class="renew-form" data-item-id="@i.ItemId">
+                                            <input type="hidden" name="itemId" value="@i.ItemId" />
+                                            <button type="submit" class="btn btn-sm btn-outline-primary">@T["loans.renew"]</button>
+                                        </form>
+                                    }
+                                    else if (overdue)
+                                    {
+                                        <span class="small text-danger">@T["loans.return"]</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="small text-muted">@T["loans.norenew"]</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-muted small">@T["loans.note"]</p>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        window.I18N = @Json.Serialize(new
+        {
+            session = T["js.session"],
+            renewFail = T["js.renew.fail"],
+            daysLeft = T["loans.left"],
+            noRenew = T["loans.norenew"],
+            close = T["common.close"],
+            locale = CultureInfo.CurrentUICulture.Name == "en" ? "en-US" : "vi-VN"
+        });
+    </script>
+    <script src="~/js/my-loans.js" asp-append-version="true"></script>
+}

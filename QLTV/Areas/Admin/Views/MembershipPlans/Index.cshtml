@@ -1,0 +1,59 @@
+@model IEnumerable<PlanRow>
+@using System.Globalization
+@{
+    ViewData["Title"] = "Gói thành viên";
+    var vi = new CultureInfo("vi-VN");
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4 m-0">Gói thành viên</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Thêm gói</a>
+</div>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr>
+            <th>Tên gói</th>
+            <th class="text-end">Phí</th>
+            <th class="text-center">Thời hạn</th>
+            <th class="text-end">Tiền cọc</th>
+            <th class="text-center">Sách tối đa</th>
+            <th class="text-center">Ngày mượn</th>
+            <th class="text-center">Gia hạn</th>
+            <th class="text-center">Thẻ đã bán</th>
+            <th style="width:150px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr class="@(p.IsActive ? "" : "text-muted")">
+                <td>
+                    @p.Name
+                    @if (!p.IsActive) { <span class="badge text-bg-secondary ms-1">Ngừng bán</span> }
+                </td>
+                <td class="text-end">@p.Price.ToString("N0", vi) đ</td>
+                <td class="text-center">@p.DurationMonths tháng</td>
+                <td class="text-end">@p.DepositAmount.ToString("N0", vi) đ</td>
+                <td class="text-center">@p.MaxBooks</td>
+                <td class="text-center">@p.LoanDays ngày</td>
+                <td class="text-center">@p.MaxRenewals lần</td>
+                <td class="text-center">@p.CardCount</td>
+                <td class="text-end">
+                    <a asp-action="Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Sửa</a>
+                    <form asp-action="Delete" asp-route-id="@p.Id" method="post" class="d-inline"
+                          onsubmit="return confirm('Bạn chắc chắn muốn xóa gói này?');">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        @if (!Model.Any())
+        {
+            <tr><td colspan="9" class="text-center text-muted py-4">Chưa có gói nào.</td></tr>
+        }
+    </tbody>
+</table>
+
+<p class="text-muted small">Số sách tối đa, số ngày mượn và số lần gia hạn là quy định mượn trả, áp dụng cho cả thẻ đã bán.
+Phí gói được lưu theo giá lúc mua nên đổi giá không ảnh hưởng thẻ cũ.</p>

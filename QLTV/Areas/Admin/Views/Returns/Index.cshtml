@@ -1,0 +1,89 @@
+@model ReturnIndexVm
+@{
+    ViewData["Title"] = "Trả sách";
+    var today = DateTime.Today;
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+    var pager = new PagerVm { Page = Model.Result.Page, TotalPages = Model.Result.TotalPages };
+    if (!string.IsNullOrEmpty(Model.Q)) { pager.RouteValues["q"] = Model.Q; }
+    if (Model.OverdueOnly) { pager.RouteValues["overdueOnly"] = "true"; }
+}
+
+<h2 class="h4 mb-3">Trả sách</h2>
+
+<form asp-action="Find" method="post" class="row g-2 mb-4" style="max-width:640px">
+    <div class="col">
+        <input name="barcode" class="form-control font-monospace" autofocus autocomplete="off"
+               placeholder="Quét hoặc nhập mã vạch sách khách trả..." />
+    </div>
+    <div class="col-auto"><button type="submit" class="btn btn-success">Trả sách</button></div>
+</form>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h3 class="h5 m-0">Sách đang mượn <span class="text-muted fs-6">(@Model.Result.TotalItems)</span></h3>
+    @if (Model.OverdueTotal > 0)
+    {
+        <span class="badge text-bg-danger">@Model.OverdueTotal cuốn quá hạn</span>
+    }
+</div>
+
+<form method="get" class="row g-2 mb-3 align-items-center">
+    <div class="col-md-5">
+        <input name="q" value="@Model.Q" class="form-control" placeholder="Tìm theo khách, mã vạch hoặc tên sách..." />
+    </div>
+    <div class="col-auto">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="overdueOnly" name="overdueOnly" value="true" checked="@Model.OverdueOnly" />
+            <label class="form-check-label" for="overdueOnly">Chỉ quá hạn</label>
+        </div>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-secondary">Lọc</button>
+        @if (!string.IsNullOrEmpty(Model.Q) || Model.OverdueOnly) { <a asp-action="Index" class="btn btn-link">Xóa lọc</a> }
+    </div>
+</form>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr>
+            <th>Sách</th>
+            <th>Mã vạch</th>
+            <th>Khách</th>
+            <th>Hạn trả</th>
+            <th class="text-center">Gia hạn</th>
+            <th style="width:190px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model.Result.Items)
+        {
+            var late = (today - r.DueDate.Date).Days;
+            <tr>
+                <td>@r.BookTitle</td>
+                <td class="font-monospace">@r.Barcode</td>
+                <td>
+                    <a asp-controller="Members" asp-action="Details" asp-route-id="@r.MemberId" class="text-decoration-none">@r.MemberName</a>
+                    <div class="small text-muted">@r.MemberCode · @r.Phone</div>
+                </td>
+                <td class="@(late > 0 ? "text-danger fw-semibold" : "")">
+                    @r.DueDate.ToString("dd/MM/yyyy")
+                    @if (late > 0) { <div class="small">quá hạn @late ngày</div> }
+                </td>
+                <td class="text-center">@r.RenewCount</td>
+                <td class="text-end">
+                    <form asp-controller="Loans" asp-action="Renew" method="post" class="d-inline">
+                        <input type="hidden" name="itemId" value="@r.ItemId" />
+                        <input type="hidden" name="returnUrl" value="@returnUrl" />
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Gia hạn</button>
+                    </form>
+                    <a asp-action="Process" asp-route-loanItemId="@r.ItemId" class="btn btn-sm btn-success">Trả</a>
+                </td>
+            </tr>
+        }
+        @if (!Model.Result.Items.Any())
+        {
+            <tr><td colspan="6" class="text-center text-muted py-4">Không có sách nào đang mượn.</td></tr>
+        }
+    </tbody>
+</table>
+
+<partial name="_Pager" model="pager" />

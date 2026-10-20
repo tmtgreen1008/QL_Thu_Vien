@@ -1,0 +1,16 @@
+@model Category
+@{
+    ViewData["Title"] = "Sửa thể loại";
+}
+
+<h2 class="h4 mb-3">Sửa thể loại</h2>
+
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" style="max-width:640px">
+    <partial name="_Form" model="Model" />
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Hủy</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

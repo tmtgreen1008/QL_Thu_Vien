@@ -1,0 +1,53 @@
+@model OverdueReportVm
+@using System.Globalization
+@{
+    ViewData["Title"] = "Sách quá hạn";
+    ViewData["Tab"] = "overdue";
+    var vi = new CultureInfo("vi-VN");
+    string Money(decimal v) => v.ToString("N0", vi) + " đ";
+}
+
+<h2 class="h4 mb-3">Báo cáo</h2>
+<partial name="_ReportNav" />
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <div><strong>@Model.Rows.Count</strong> cuốn quá hạn · phạt ước tính tới hôm nay: <strong>@Money(Model.TotalFine)</strong></div>
+    <div class="text-muted small">@Money(Model.LateFeePerDay)/cuốn/ngày, tối đa bằng giá đền của sách</div>
+</div>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr>
+            <th>Khách</th>
+            <th>Điện thoại</th>
+            <th>Sách</th>
+            <th>Mã vạch</th>
+            <th>Hạn trả</th>
+            <th class="text-center">Trễ</th>
+            <th class="text-end">Phạt ước tính</th>
+            <th style="width:80px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model.Rows)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Members" asp-action="Details" asp-route-id="@r.MemberId" class="text-decoration-none">@r.MemberName</a>
+                    <div class="small text-muted font-monospace">@r.MemberCode</div>
+                </td>
+                <td>@r.Phone</td>
+                <td>@r.BookTitle</td>
+                <td class="font-monospace">@r.Barcode</td>
+                <td>@r.DueDate.ToString("dd/MM/yyyy")</td>
+                <td class="text-center text-danger fw-semibold">@r.DaysLate ngày</td>
+                <td class="text-end">@Money(r.EstimatedFine)</td>
+                <td class="text-end"><a asp-controller="Returns" asp-action="Process" asp-route-loanItemId="@r.ItemId" class="btn btn-sm btn-success">Trả</a></td>
+            </tr>
+        }
+        @if (!Model.Rows.Any())
+        {
+            <tr><td colspan="8" class="text-center text-muted py-4">Không có sách nào quá hạn.</td></tr>
+        }
+    </tbody>
+</table>

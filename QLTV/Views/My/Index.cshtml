@@ -1,0 +1,73 @@
+@model MyDashboardVm
+@{
+    ViewData["Title"] = T["nav.account"];
+    string Money(decimal v) => v.ToString("N0") + " " + T["currency"];
+    var e = Model.Eligibility;
+    var today = DateTime.Today;
+
+    // Lý do chưa mượn được: dựng từ dữ liệu để dịch theo ngôn ngữ đang chọn
+    var blockers = new List<string>();
+    if (e.Member.IsLocked) blockers.Add(T["my.block.locked"]);
+    if (e.Card == null) blockers.Add(T["my.block.nocard"]);
+    else if (e.Card.Plan!.MaxBooks <= 0) blockers.Add(T["my.block.onsiteplan"]);
+    else if (e.OpenCount >= e.Card.Plan.MaxBooks) blockers.Add(T["my.block.full", e.Card.Plan.MaxBooks]);
+    if (e.OverdueCount > 0) blockers.Add(T["my.block.overdue", e.OverdueCount]);
+    if (e.UnpaidTotal > 0) blockers.Add(T["my.block.unpaid", Money(e.UnpaidTotal)]);
+}
+
+<div class="row g-4">
+    <div class="col-md-3"><partial name="_Menu" /></div>
+
+    <div class="col-md-9">
+        <h1 class="h4 mb-1">@T["my.hello", Model.Member.FullName]</h1>
+        <div class="text-muted mb-3">@T["my.membercode"] <span class="font-monospace">@Model.Member.MemberCode</span></div>
+
+        @if (blockers.Any())
+        {
+            <div class="alert alert-warning">
+                <div class="fw-semibold">@T["my.blockers.title"]</div>
+                <ul class="mb-0">
+                    @foreach (var b in blockers) { <li>@b</li> }
+                </ul>
+            </div>
+        }
+        @if (Model.DueSoon > 0)
+        {
+            <div class="alert alert-info">@T["my.duesoon", Model.DueSoon]
+                <a asp-action="Loans">@T["my.duesoon.link"]</a></div>
+        }
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="card h-100"><div class="card-body">
+                    <div class="text-muted small">@T["my.card.title"]</div>
+                    @if (e.Card != null)
+                    {
+                        <div class="fs-5">@e.Card.Plan?.Name</div>
+                        <div class="small text-muted">@T["my.card.valid", e.Card.EndDate.ToString("d"), (e.Card.EndDate.Date - today).Days]</div>
+                        <div class="small text-muted">@T["my.card.limits", e.Card.Plan?.MaxBooks ?? 0, e.Card.Plan?.LoanDays ?? 0]</div>
+                    }
+                    else
+                    {
+                        <div class="fs-5 text-danger">@T["my.card.none"]</div>
+                        <div class="small text-muted">@T["my.card.none.help"] <a asp-controller="Pricing" asp-action="Index">@T["nav.pricing"]</a></div>
+                    }
+                </div></div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100"><div class="card-body">
+                    <div class="text-muted small">@T["my.loans.count"]</div>
+                    <div class="fs-4">@e.OpenCount / @e.MaxBooks</div>
+                    @if (e.OverdueCount > 0) { <div class="small text-danger">@T["my.overdue.count", e.OverdueCount]</div> }
+                </div></div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100"><div class="card-body">
+                    <div class="text-muted small">@T["my.owed"]</div>
+                    <div class="fs-4 @(e.UnpaidTotal > 0 ? "text-danger" : "")">@Money(e.UnpaidTotal)</div>
+                    <div class="small text-muted">@T["my.deposit", Money(Model.HeldDeposit)]</div>
+                </div></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+@model TopBooksVm
+@{
+    ViewData["Title"] = "Sách mượn nhiều / tồn lâu";
+    ViewData["Tab"] = "top";
+}
+
+<h2 class="h4 mb-3">Báo cáo</h2>
+<partial name="_ReportNav" />
+
+<form method="get" class="row g-2 mb-4 align-items-end">
+    <div class="col-6 col-md-2">
+        <label class="form-label small mb-0" for="dateFrom">Từ ngày</label>
+        <input type="date" id="dateFrom" name="dateFrom" value="@Model.DateFrom.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <div class="col-6 col-md-2">
+        <label class="form-label small mb-0" for="dateTo">Đến ngày</label>
+        <input type="date" id="dateTo" name="dateTo" value="@Model.DateTo.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <div class="col-6 col-md-3">
+        <label class="form-label small mb-0" for="idleDays">Sách tồn lâu: không ai mượn trong (ngày)</label>
+        <input type="number" id="idleDays" name="idleDays" value="@Model.IdleDays" min="7" max="730" class="form-control" />
+    </div>
+    <div class="col-auto"><button type="submit" class="btn btn-outline-secondary">Xem</button></div>
+</form>
+
+<div class="row g-4">
+    <div class="col-lg-6">
+        <h3 class="h5">Top 10 sách được mượn nhiều nhất</h3>
+        <table class="table table-sm align-middle">
+            <thead><tr><th style="width:40px">#</th><th>Sách</th><th>Tác giả</th><th class="text-end">Lượt mượn</th></tr></thead>
+            <tbody>
+                @foreach (var t in Model.Top)
+                {
+                    <tr>
+                        <td>@t.Rank</td>
+                        <td><a asp-controller="Books" asp-action="Details" asp-route-id="@t.BookId" class="text-decoration-none">@t.Title</a></td>
+                        <td>@t.Author</td>
+                        <td class="text-end fw-semibold">@t.LoanCount</td>
+                    </tr>
+                }
+                @if (!Model.Top.Any())
+                {
+                    <tr><td colspan="4" class="text-center text-muted py-3">Chưa có lượt mượn nào trong khoảng này.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-6">
+        <h3 class="h5">Sách tồn lâu không ai mượn</h3>
+        <table class="table table-sm align-middle">
+            <thead><tr><th>Sách</th><th class="text-center">Bản sao</th><th>Lần mượn gần nhất</th></tr></thead>
+            <tbody>
+                @foreach (var b in Model.Idle)
+                {
+                    <tr>
+                        <td><a asp-controller="Books" asp-action="Details" asp-route-id="@b.BookId" class="text-decoration-none">@b.Title</a>
+                            <div class="small text-muted">@b.Author</div></td>
+                        <td class="text-center">@b.Copies</td>
+                        <td>@(b.LastLoan.HasValue ? b.LastLoan.Value.ToString("dd/MM/yyyy") : "Chưa từng mượn")</td>
+                    </tr>
+                }
+                @if (!Model.Idle.Any())
+                {
+                    <tr><td colspan="3" class="text-center text-muted py-3">Không có sách nào tồn lâu.</td></tr>
+                }
+            </tbody>
+        </table>
+        <p class="text-muted small">Hiển thị tối đa 50 đầu sách, sắp theo lần mượn gần nhất cũ nhất.</p>
+    </div>
+</div>

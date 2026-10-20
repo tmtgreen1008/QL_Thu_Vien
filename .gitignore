@@ -1,0 +1,25 @@
+## Visual Studio / VS Code
+.vs/
+.vscode/
+*.user
+*.suo
+*.userprefs
+*.rsuser
+
+## Kết quả build
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+publish/
+TestResults/
+
+## Khác
+*.log
+*.tmp
+Thumbs.db
+.DS_Store
+
+## Tệp bí mật (nếu có)
+appsettings.Production.json
+secrets.json

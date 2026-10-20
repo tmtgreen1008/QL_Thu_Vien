@@ -1,0 +1,90 @@
+﻿@using LibraryManagement.Services
+@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    string Active(params string[] names) => controller != null && names.Contains(controller) ? "active" : "";
+    var wishlistCount = WishlistSession.Count(Context);
+    var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+}
+<!DOCTYPE html>
+<html lang="@lang">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @T["brand"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/portal.css" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark portal-nav">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">📚 @T["brand"]</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                        aria-controls="mainNav" aria-expanded="false" aria-label="@T["nav.menu"]">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"><a class="nav-link @Active("Home")" asp-area="" asp-controller="Home" asp-action="Index">@T["nav.home"]</a></li>
+                        <li class="nav-item"><a class="nav-link @Active("Catalog")" asp-area="" asp-controller="Catalog" asp-action="Index">@T["nav.catalog"]</a></li>
+                        <li class="nav-item"><a class="nav-link @Active("Pricing")" asp-area="" asp-controller="Pricing" asp-action="Index">@T["nav.pricing"]</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link @Active("Wishlist")" asp-area="" asp-controller="Wishlist" asp-action="Index">
+                                @T["nav.wishlist"]
+                                @if (wishlistCount > 0) { <span class="badge rounded-pill text-bg-warning">@wishlistCount</span> }
+                            </a>
+                        </li>
+                        @if (User.IsInRole("User"))
+                        {
+                            <li class="nav-item"><a class="nav-link @Active("My")" asp-area="" asp-controller="My" asp-action="Index">@T["nav.account"]</a></li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">@T["nav.admin"]</a></li>
+                        }
+                    </ul>
+                    <partial name="_LoginPartial" />
+                    <form asp-area="" asp-controller="Language" asp-action="Set" method="post" class="d-flex align-items-center ms-lg-3">
+                        <input type="hidden" name="returnUrl" value="@returnUrl" />
+                        <button type="submit" name="culture" value="vi" class="btn btn-sm @(lang == "vi" ? "btn-light" : "btn-outline-light")">VI</button>
+                        <button type="submit" name="culture" value="en" class="btn btn-sm ms-1 @(lang == "en" ? "btn-light" : "btn-outline-light")">EN</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-4 flex-grow-1">
+        @if (TempData["Success"] is string okMessage)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @okMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="@T["common.close"]"></button>
+            </div>
+        }
+        @if (TempData["Error"] is string errMessage)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @errMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="@T["common.close"]"></button>
+            </div>
+        }
+        @RenderBody()
+    </main>
+
+    <footer class="portal-footer py-4 mt-auto">
+        <div class="container d-flex flex-wrap justify-content-between gap-2 small">
+            <div>@T["footer.copy", DateTime.Now.Year]</div>
+            <div>
+                <a asp-area="" asp-controller="Catalog" asp-action="Index">@T["nav.catalog"]</a> ·
+                <a asp-area="" asp-controller="Pricing" asp-action="Index">@T["nav.pricing"]</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

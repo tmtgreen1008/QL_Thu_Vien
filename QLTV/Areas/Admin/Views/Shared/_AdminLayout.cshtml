@@ -1,0 +1,127 @@
+@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+    string Active(params string[] names) => controller != null && names.Contains(controller) ? "active" : "";
+    string ActiveLoans(bool create) => controller == "Loans" && ((action == "Create") == create) ? "active" : "";
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Quản trị thư viện</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+            .sidebar {
+                min-height: calc(100vh - 56px);
+                background: #f8f9fa;
+                border-right: 1px solid #dee2e6;
+            }
+
+                .sidebar .nav-link {
+                    color: #333;
+                }
+
+                    .sidebar .nav-link.active {
+                        background: #0d6efd;
+                        color: #fff;
+                    }
+
+                    .sidebar .nav-link.disabled {
+                        color: #adb5bd;
+                    }
+
+                .sidebar .nav-heading {
+                    font-size: .75rem;
+                    text-transform: uppercase;
+                    color: #6c757d;
+                    margin: 1rem 0 .25rem .5rem;
+                }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="Admin" asp-controller="Home" asp-action="Index">Thư viện · Quản trị</a>
+            <div class="d-flex align-items-center gap-3">
+                <a class="btn btn-sm btn-outline-light" asp-area="" asp-controller="Home" asp-action="Index">Trang công khai</a>
+                <span class="text-light small">@User.Identity?.Name</span>
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" class="m-0">
+                    <button type="submit" class="btn btn-sm btn-light">Đăng xuất</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 sidebar p-3">
+                <ul class="nav nav-pills flex-column gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link @Active("Home")" asp-area="Admin" asp-controller="Home" asp-action="Index">Bảng điều khiển</a>
+                    </li>
+
+                    <li class="nav-heading">Kho sách</li>
+                    <li class="nav-item">
+                        <a class="nav-link @Active("Books", "BookCopies")" asp-area="Admin" asp-controller="Books" asp-action="Index">Đầu sách và bản sao</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @Active("Authors")" asp-area="Admin" asp-controller="Authors" asp-action="Index">Tác giả</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @Active("Categories")" asp-area="Admin" asp-controller="Categories" asp-action="Index">Thể loại</a>
+                    </li>
+
+                    <li class="nav-heading">Khách hàng</li>
+                    <li class="nav-item">
+                        <a class="nav-link @Active("Members", "Memberships")" asp-area="Admin" asp-controller="Members" asp-action="Index">Khách hàng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @Active("MembershipPlans")" asp-area="Admin" asp-controller="MembershipPlans" asp-action="Index">Gói thành viên</a>
+                    </li>
+
+                    <li class="nav-heading">Nghiệp vụ</li>
+                    <li class="nav-item">
+                        <a class="nav-link @ActiveLoans(true)" asp-area="Admin" asp-controller="Loans" asp-action="Create">Cho mượn sách</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @Active("Returns")" asp-area="Admin" asp-controller="Returns" asp-action="Index">Trả sách / đang mượn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @ActiveLoans(false)" asp-area="Admin" asp-controller="Loans" asp-action="Index">Phiếu mượn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @Active("Payments")" asp-area="Admin" asp-controller="Payments" asp-action="Index">Thu tiền / sổ giao dịch</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @Active("Reports")" asp-area="Admin" asp-controller="Reports" asp-action="Revenue">Báo cáo</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <main class="col-md-10 p-4">
+                @if (TempData["Success"] is string okMessage)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @okMessage
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
+                    </div>
+                }
+                @if (TempData["Error"] is string errMessage)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @errMessage
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng"></button>
+                    </div>
+                }
+
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

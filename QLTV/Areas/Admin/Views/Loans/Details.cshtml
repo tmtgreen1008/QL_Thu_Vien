@@ -1,0 +1,74 @@
+@model Loan
+@using System.Globalization
+@using LibraryManagement.Models.Enums
+@{
+    ViewData["Title"] = "Phiếu mượn PM" + Model.Id.ToString("D5");
+    var vi = new CultureInfo("vi-VN");
+    var today = DateTime.Today;
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+}
+
+<div class="d-flex justify-content-between align-items-start mb-3">
+    <div>
+        <a asp-action="Index" class="text-decoration-none small">← Danh sách phiếu</a>
+        <h2 class="h4 mt-1 mb-0">Phiếu mượn <span class="font-monospace">PM@(Model.Id.ToString("D5"))</span></h2>
+    </div>
+    <a asp-action="Print" asp-route-id="@Model.Id" target="_blank" class="btn btn-outline-secondary">In phiếu</a>
+</div>
+
+<table class="table table-sm mb-4" style="max-width:560px">
+    <tr><th style="width:140px">Khách</th>
+        <td><a asp-controller="Members" asp-action="Details" asp-route-id="@Model.MemberId">@Model.Member?.FullName</a>
+            <span class="font-monospace text-muted small">@Model.Member?.MemberCode</span></td></tr>
+    <tr><th>Thẻ</th><td>@Model.Membership?.Plan?.Name</td></tr>
+    <tr><th>Ngày mượn</th><td>@Model.LoanDate.ToString("dd/MM/yyyy HH:mm")</td></tr>
+    <tr><th>Lập bởi</th><td>@Model.Admin?.FullName</td></tr>
+    @if (!string.IsNullOrWhiteSpace(Model.Note)) { <tr><th>Ghi chú</th><td>@Model.Note</td></tr> }
+</table>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr>
+            <th>Sách</th>
+            <th>Mã vạch</th>
+            <th>Hạn trả</th>
+            <th class="text-center">Đã gia hạn</th>
+            <th class="text-end">Phí thuê</th>
+            <th>Trạng thái</th>
+            <th style="width:190px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model.Items.OrderBy(x => x.Id))
+        {
+            var open = i.ReturnedAt == null;
+            var overdue = open && i.DueDate.Date < today;
+            <tr>
+                <td>@i.BookCopy?.Book?.Title</td>
+                <td class="font-monospace">@i.BookCopy?.Barcode</td>
+                <td class="@(overdue ? "text-danger fw-semibold" : "")">
+                    @i.DueDate.ToString("dd/MM/yyyy")
+                    @if (overdue) { <div class="small">quá hạn @((today - i.DueDate.Date).Days) ngày</div> }
+                </td>
+                <td class="text-center">@i.RenewCount</td>
+                <td class="text-end">@(i.RentalFeeCharged == 0 ? "—" : i.RentalFeeCharged.ToString("N0", vi) + " đ")</td>
+                <td>
+                    @if (open) { <span class="badge text-bg-@(overdue ? "danger" : "primary")">@(overdue ? "Quá hạn" : "Đang mượn")</span> }
+                    else if (i.Status == LoanItemStatus.Lost) { <span class="badge text-bg-dark">Mất</span> <div class="small text-muted">@(i.ReturnedAt?.ToString("dd/MM/yyyy"))</div> }
+                    else { <span class="badge text-bg-success">Đã trả</span> <div class="small text-muted">@(i.ReturnedAt?.ToString("dd/MM/yyyy"))</div> }
+                </td>
+                <td class="text-end">
+                    @if (open)
+                    {
+                        <form asp-action="Renew" method="post" class="d-inline">
+                            <input type="hidden" name="itemId" value="@i.Id" />
+                            <input type="hidden" name="returnUrl" value="@returnUrl" />
+                            <button type="submit" class="btn btn-sm btn-outline-primary">Gia hạn</button>
+                        </form>
+                        <a asp-controller="Returns" asp-action="Process" asp-route-loanItemId="@i.Id" class="btn btn-sm btn-success">Trả</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

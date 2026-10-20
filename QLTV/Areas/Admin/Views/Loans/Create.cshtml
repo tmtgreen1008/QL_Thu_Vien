@@ -1,0 +1,106 @@
+@model LoanCreateVm
+@using System.Globalization
+@{
+    ViewData["Title"] = "Cho mượn sách";
+    var vi = new CultureInfo("vi-VN");
+    var e = Model.Eligibility;
+}
+
+<h2 class="h4 mb-3">Cho mượn sách</h2>
+
+@if (e == null)
+{
+    <form method="get" class="row g-2 mb-3" style="max-width:640px">
+        <div class="col">
+            <input name="q" value="@Model.Q" class="form-control" autofocus
+                   placeholder="Nhập mã thành viên, số điện thoại hoặc tên khách..." />
+        </div>
+        <div class="col-auto"><button type="submit" class="btn btn-primary">Tìm khách</button></div>
+    </form>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Q) && !Model.Matches.Any())
+    {
+        <div class="alert alert-warning" style="max-width:640px">
+            Không tìm thấy khách nào. <a asp-controller="Members" asp-action="Create">Tạo hồ sơ khách mới</a>.
+        </div>
+    }
+    @if (Model.Matches.Count > 1)
+    {
+        <table class="table table-hover" style="max-width:640px">
+            <thead><tr><th>Mã</th><th>Họ tên</th><th>Điện thoại</th><th></th></tr></thead>
+            <tbody>
+                @foreach (var m in Model.Matches)
+                {
+                    <tr>
+                        <td class="font-monospace">@m.MemberCode</td>
+                        <td>@m.FullName</td>
+                        <td>@m.Phone</td>
+                        <td class="text-end"><a asp-action="Create" asp-route-memberId="@m.Id" class="btn btn-sm btn-primary">Chọn</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    var today = DateTime.Today;
+    <div class="card mb-3" style="max-width:720px">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div class="fw-semibold fs-5">@e.Member.FullName <span class="text-muted font-monospace fs-6">@e.Member.MemberCode</span></div>
+                    <div class="text-muted small">@e.Member.Phone</div>
+                </div>
+                <a asp-action="Create" class="btn btn-sm btn-outline-secondary align-self-start">Đổi khách</a>
+            </div>
+            <hr />
+            <div class="row small">
+                <div class="col-sm-4"><div class="text-muted">Thẻ</div>
+                    @if (e.Card != null) { <div>@e.Card.Plan?.Name (đến @e.Card.EndDate.ToString("dd/MM/yyyy"))</div> }
+                    else { <div class="text-danger">Chưa có thẻ hiệu lực</div> }
+                </div>
+                <div class="col-sm-4"><div class="text-muted">Đang mượn</div><div>@e.OpenCount / @e.MaxBooks cuốn</div></div>
+                <div class="col-sm-4"><div class="text-muted">Thời hạn mượn</div><div>@(e.Plan?.LoanDays ?? 0) ngày</div></div>
+            </div>
+        </div>
+    </div>
+
+    @if (!e.CanBorrow)
+    {
+        <div class="alert alert-danger" style="max-width:720px">
+            <div class="fw-semibold mb-1">Không thể cho mượn:</div>
+            <ul class="mb-2">
+                @foreach (var b in e.Blockers) { <li>@b</li> }
+            </ul>
+            <a asp-controller="Members" asp-action="Details" asp-route-id="@e.Member.Id" class="btn btn-sm btn-light">Mở hồ sơ khách</a>
+            <a asp-controller="Returns" asp-action="Index" asp-route-q="@e.Member.MemberCode" class="btn btn-sm btn-light">Sách khách đang mượn</a>
+        </div>
+    }
+    else
+    {
+        @if (Model.Errors.Any())
+        {
+            <div class="alert alert-danger" style="max-width:720px">
+                <ul class="mb-0">
+                    @foreach (var err in Model.Errors) { <li>@err</li> }
+                </ul>
+            </div>
+        }
+
+        <form asp-action="Create" method="post" style="max-width:720px">
+            <input type="hidden" name="memberId" value="@e.Member.Id" />
+            <div class="mb-3">
+                <label class="form-label" for="barcodes">Mã vạch sách (mỗi mã một dòng, được mượn thêm tối đa @e.Remaining cuốn)</label>
+                <textarea id="barcodes" name="barcodes" class="form-control font-monospace" rows="5" autofocus
+                          placeholder="Quét hoặc gõ mã vạch, nhấn Enter để xuống dòng...">@Model.Barcodes</textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="note">Ghi chú</label>
+                <input id="note" name="note" value="@Model.Note" class="form-control" maxlength="250" />
+            </div>
+            <button type="submit" class="btn btn-primary">Xác nhận cho mượn</button>
+            <a asp-controller="Members" asp-action="Details" asp-route-id="@e.Member.Id" class="btn btn-outline-secondary">Hủy</a>
+        </form>
+    }
+}

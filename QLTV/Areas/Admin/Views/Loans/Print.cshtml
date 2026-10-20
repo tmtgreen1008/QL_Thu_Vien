@@ -1,0 +1,55 @@
+@model Loan
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>Phiếu mượn PM@(Model.Id.ToString("D5"))</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        body { max-width: 760px; margin: 24px auto; font-size: 15px; }
+        @@media print { .no-print { display: none; } body { margin: 0; } }
+    </style>
+</head>
+<body>
+    <div class="text-center mb-3">
+        <h2 class="h4 mb-0">PHIẾU MƯỢN SÁCH</h2>
+        <div class="text-muted">Số: PM@(Model.Id.ToString("D5")) · Ngày @Model.LoanDate.ToString("dd/MM/yyyy HH:mm")</div>
+    </div>
+
+    <p class="mb-1"><strong>Khách:</strong> @Model.Member?.FullName (@Model.Member?.MemberCode) · @Model.Member?.Phone</p>
+    <p><strong>Thủ thư lập phiếu:</strong> @Model.Admin?.FullName</p>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr><th style="width:40px">#</th><th>Tên sách</th><th>Mã vạch</th><th>Hạn trả</th></tr>
+        </thead>
+        <tbody>
+            @{ var n = 0; }
+            @foreach (var i in Model.Items.OrderBy(x => x.Id))
+            {
+                n++;
+                <tr>
+                    <td>@n</td>
+                    <td>@i.BookCopy?.Book?.Title</td>
+                    <td class="font-monospace">@i.BookCopy?.Barcode</td>
+                    <td>@i.DueDate.ToString("dd/MM/yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p class="small text-muted">Trả trễ phạt theo quy định của thư viện. Vui lòng giữ phiếu này để đối chiếu khi trả sách.</p>
+
+    <div class="row mt-5 text-center">
+        <div class="col-6">Khách ký<br /><br /><br /></div>
+        <div class="col-6">Thủ thư ký<br /><br /><br /></div>
+    </div>
+
+    <div class="text-center no-print mt-3">
+        <button onclick="window.print()" class="btn btn-primary">In phiếu</button>
+    </div>
+</body>
+</html>

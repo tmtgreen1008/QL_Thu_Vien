@@ -1,0 +1,51 @@
+@model PagerVm
+@{
+    Dictionary<string, string> Link(int p)
+    {
+        var d = new Dictionary<string, string>(Model.RouteValues);
+        d["page"] = p.ToString();
+        return d;
+    }
+    var start = Math.Max(1, Model.Page - 2);
+    var end = Math.Min(Model.TotalPages, Model.Page + 2);
+}
+@if (Model.TotalPages > 1)
+{
+    <nav aria-label="Phân trang">
+        <ul class="pagination">
+            @{ var prev = Link(Model.Page - 1); }
+            <li class="page-item @(Model.Page <= 1 ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-all-route-data="prev">Trước</a>
+            </li>
+            @if (start > 1)
+            {
+                var first = Link(1);
+                <li class="page-item"><a class="page-link" asp-action="Index" asp-all-route-data="first">1</a></li>
+                @if (start > 2)
+                {
+                    <li class="page-item disabled"><span class="page-link">…</span></li>
+                }
+            }
+            @for (var p = start; p <= end; p++)
+            {
+                var rd = Link(p);
+                <li class="page-item @(p == Model.Page ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-all-route-data="rd">@p</a>
+                </li>
+            }
+            @if (end < Model.TotalPages)
+            {
+                @if (end < Model.TotalPages - 1)
+                {
+                    <li class="page-item disabled"><span class="page-link">…</span></li>
+                }
+                var last = Link(Model.TotalPages);
+                <li class="page-item"><a class="page-link" asp-action="Index" asp-all-route-data="last">@Model.TotalPages</a></li>
+            }
+            @{ var next = Link(Model.Page + 1); }
+            <li class="page-item @(Model.Page >= Model.TotalPages ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-all-route-data="next">Sau</a>
+            </li>
+        </ul>
+    </nav>
+}

@@ -1,0 +1,107 @@
+@model RevenueReportVm
+@using System.Globalization
+@{
+    ViewData["Title"] = "Báo cáo doanh thu";
+    ViewData["Tab"] = "revenue";
+    var vi = new CultureInfo("vi-VN");
+    var inv = CultureInfo.InvariantCulture;
+    string Money(decimal v) => v.ToString("N0", vi) + " đ";
+}
+
+<h2 class="h4 mb-3">Báo cáo</h2>
+<partial name="_ReportNav" />
+
+<form method="get" class="row g-2 mb-3 align-items-end">
+    <div class="col-6 col-md-2">
+        <label class="form-label small mb-0" for="dateFrom">Từ ngày</label>
+        <input type="date" id="dateFrom" name="dateFrom" value="@Model.DateFrom.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <div class="col-6 col-md-2">
+        <label class="form-label small mb-0" for="dateTo">Đến ngày</label>
+        <input type="date" id="dateTo" name="dateTo" value="@Model.DateTo.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <div class="col-6 col-md-2">
+        <label class="form-label small mb-0" for="groupBy">Gom theo</label>
+        <select id="groupBy" name="groupBy" class="form-select">
+            <option value="day" selected="@(Model.GroupBy == "day")">Ngày</option>
+            <option value="month" selected="@(Model.GroupBy == "month")">Tháng</option>
+        </select>
+    </div>
+    <div class="col-auto"><button type="submit" class="btn btn-outline-secondary">Xem</button></div>
+</form>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Tổng doanh thu</div>
+            <div class="fs-4">@Money(Model.Total)</div>
+        </div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Tiền mặt / Chuyển khoản</div>
+            <div>@Money(Model.Cash) / @Money(Model.Transfer)</div>
+        </div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Cọc ròng trong kỳ</div>
+            <div class="fs-5">@Money(Model.DepositNet)</div>
+        </div></div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Đang còn nợ (hiện tại)</div>
+            <div class="fs-5 @(Model.UnpaidTotal > 0 ? "text-danger" : "")">@Money(Model.UnpaidTotal)</div>
+        </div></div>
+    </div>
+</div>
+
+<table class="table table-sm align-middle">
+    <thead>
+        <tr>
+            <th>Kỳ</th>
+            <th class="text-end">Phí thẻ</th>
+            <th class="text-end">Phí thuê</th>
+            <th class="text-end">Phạt trễ</th>
+            <th class="text-end">Đền sách</th>
+            <th class="text-end">Tổng</th>
+            <th style="width:22%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var l in Model.Lines)
+        {
+            var pct = Model.MaxLine > 0 ? (double)(l.Total * 100 / Model.MaxLine) : 0;
+            <tr class="@(l.Total == 0 ? "text-muted" : "")">
+                <td>@l.Label</td>
+                <td class="text-end">@(l.MembershipFee == 0 ? "—" : Money(l.MembershipFee))</td>
+                <td class="text-end">@(l.RentalFee == 0 ? "—" : Money(l.RentalFee))</td>
+                <td class="text-end">@(l.LateFine == 0 ? "—" : Money(l.LateFine))</td>
+                <td class="text-end">@(l.Compensation == 0 ? "—" : Money(l.Compensation))</td>
+                <td class="text-end fw-semibold">@(l.Total == 0 ? "—" : Money(l.Total))</td>
+                <td>
+                    <div class="progress" style="height:8px"><div class="progress-bar" style="width:@pct.ToString("0.#", inv)%"></div></div>
+                </td>
+            </tr>
+        }
+        @if (!Model.Lines.Any())
+        {
+            <tr><td colspan="7" class="text-center text-muted py-4">Không có dữ liệu.</td></tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr class="fw-semibold table-light">
+            <td>Cộng</td>
+            <td class="text-end">@Money(Model.MembershipFee)</td>
+            <td class="text-end">@Money(Model.RentalFee)</td>
+            <td class="text-end">@Money(Model.LateFine)</td>
+            <td class="text-end">@Money(Model.Compensation)</td>
+            <td class="text-end">@Money(Model.Total)</td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+
+<p class="text-muted small">Doanh thu gồm phí thẻ, phí thuê, phạt trễ và tiền đền đã thu; không gồm tiền cọc và các giao dịch đã hủy.
+Khoản ghi nợ chỉ được tính vào doanh thu khi đã thu.</p>

@@ -1,0 +1,83 @@
+@model MemberIndexVm
+@using System.Globalization
+@{
+    ViewData["Title"] = "Khách hàng";
+    var vi = new CultureInfo("vi-VN");
+    var today = DateTime.Today;
+    var pager = new PagerVm { Page = Model.Result.Page, TotalPages = Model.Result.TotalPages };
+    if (!string.IsNullOrEmpty(Model.Search)) { pager.RouteValues["search"] = Model.Search; }
+    if (!string.IsNullOrEmpty(Model.Filter)) { pager.RouteValues["filter"] = Model.Filter; }
+
+    var filters = new (string Value, string Label)[]
+    {
+        ("", "Tất cả"),
+        ("valid", "Thẻ còn hạn"),
+        ("expiring", "Sắp hết hạn (14 ngày)"),
+        ("expired", "Thẻ hết hạn"),
+        ("none", "Chưa có thẻ"),
+        ("locked", "Đang bị khóa")
+    };
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4 m-0">Khách hàng <span class="text-muted fs-6">(@Model.Result.TotalItems.ToString("N0", vi) người)</span></h2>
+    <a asp-action="Create" class="btn btn-primary">+ Tạo hồ sơ khách</a>
+</div>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-5">
+        <input name="search" value="@Model.Search" class="form-control" placeholder="Tìm theo tên, số điện thoại hoặc mã thành viên..." />
+    </div>
+    <div class="col-md-3">
+        <select name="filter" class="form-select">
+            @foreach (var f in filters)
+            {
+                <option value="@f.Value" selected="@(f.Value == (Model.Filter ?? ""))">@f.Label</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-secondary">Lọc</button>
+        @if (!string.IsNullOrEmpty(Model.Search) || !string.IsNullOrEmpty(Model.Filter))
+        {
+            <a asp-action="Index" class="btn btn-link">Xóa lọc</a>
+        }
+    </div>
+</form>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr>
+            <th>Mã</th>
+            <th>Họ tên</th>
+            <th>Điện thoại</th>
+            <th>Thẻ thành viên</th>
+            <th style="width:230px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model.Result.Items)
+        {
+            var card = MembershipLabels.ValidUntil(m.ValidUntil, today);
+            <tr>
+                <td class="font-monospace">@m.MemberCode</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@m.Id" class="text-decoration-none fw-semibold">@m.FullName</a>
+                    @if (m.IsLocked) { <span class="badge text-bg-danger ms-1">Đã khóa</span> }
+                </td>
+                <td>@m.Phone</td>
+                <td><span class="badge text-bg-@card.Badge">@card.Text</span></td>
+                <td class="text-end">
+                    <a asp-action="Details" asp-route-id="@m.Id" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                    <a asp-controller="Memberships" asp-action="Sell" asp-route-memberId="@m.Id" class="btn btn-sm btn-outline-success">Bán / gia hạn thẻ</a>
+                </td>
+            </tr>
+        }
+        @if (!Model.Result.Items.Any())
+        {
+            <tr><td colspan="5" class="text-center text-muted py-4">Không có khách nào phù hợp.</td></tr>
+        }
+    </tbody>
+</table>
+
+<partial name="_Pager" model="pager" />

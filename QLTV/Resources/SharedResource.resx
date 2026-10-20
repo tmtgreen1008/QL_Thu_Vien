@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="nav.home" xml:space="preserve"><value>Trang chủ</value></data>
+  <data name="nav.catalog" xml:space="preserve"><value>Tra cứu sách</value></data>
+  <data name="nav.pricing" xml:space="preserve"><value>Bảng giá thẻ</value></data>
+  <data name="nav.wishlist" xml:space="preserve"><value>Giỏ quan tâm</value></data>
+  <data name="nav.account" xml:space="preserve"><value>Tài khoản của tôi</value></data>
+  <data name="nav.admin" xml:space="preserve"><value>Quản trị</value></data>
+  <data name="nav.menu" xml:space="preserve"><value>Mở menu</value></data>
+  <data name="brand" xml:space="preserve"><value>Thư viện</value></data>
+  <data name="common.close" xml:space="preserve"><value>Đóng</value></data>
+  <data name="footer.copy" xml:space="preserve"><value>© {0} Thư viện · Mở cửa mỗi ngày 8:00 - 21:00</value></data>
+  <data name="currency" xml:space="preserve"><value>đ</value></data>
+  <data name="pager.prev" xml:space="preserve"><value>Trước</value></data>
+  <data name="pager.next" xml:space="preserve"><value>Sau</value></data>
+  <data name="pager.label" xml:space="preserve"><value>Phân trang</value></data>
+  <data name="auth.hello" xml:space="preserve"><value>Xin chào, {0}</value></data>
+  <data name="auth.account" xml:space="preserve"><value>Tài khoản</value></data>
+  <data name="auth.logout" xml:space="preserve"><value>Đăng xuất</value></data>
+  <data name="auth.register" xml:space="preserve"><value>Đăng ký</value></data>
+  <data name="auth.login" xml:space="preserve"><value>Đăng nhập</value></data>
+  <data name="error.title" xml:space="preserve"><value>Có lỗi xảy ra</value></data>
+  <data name="error.text" xml:space="preserve"><value>Hệ thống gặp sự cố khi xử lý yêu cầu của bạn. Vui lòng thử lại sau.</value></data>
+  <data name="home.hero.title" xml:space="preserve"><value>Tìm cuốn sách bạn muốn đọc</value></data>
+  <data name="home.hero.sub" xml:space="preserve"><value>Đọc tại chỗ hoặc mượn về nhà. Tra cứu nhanh, xem còn sách hay không trước khi đến.</value></data>
+  <data name="home.search.ph" xml:space="preserve"><value>Tên sách, tác giả hoặc ISBN...</value></data>
+  <data name="home.search.btn" xml:space="preserve"><value>Tìm sách</value></data>
+  <data name="home.stat.titles" xml:space="preserve"><value>Đầu sách</value></data>
+  <data name="home.stat.copies" xml:space="preserve"><value>Bản sách trong kho</value></data>
+  <data name="home.stat.categories" xml:space="preserve"><value>Thể loại</value></data>
+  <data name="home.stat.hours" xml:space="preserve"><value>Mở cửa mỗi ngày</value></data>
+  <data name="home.categories" xml:space="preserve"><value>Thể loại</value></data>
+  <data name="home.recent" xml:space="preserve"><value>Bạn đã xem gần đây</value></data>
+  <data name="home.latest" xml:space="preserve"><value>Sách mới nhập</value></data>
+  <data name="home.viewall" xml:space="preserve"><value>Xem tất cả</value></data>
+  <data name="home.cta.title" xml:space="preserve"><value>Muốn mượn sách về nhà?</value></data>
+  <data name="home.cta.text" xml:space="preserve"><value>Đăng ký tài khoản, đến quầy mua thẻ thành viên là có thể mượn ngay.</value></data>
+  <data name="book.available" xml:space="preserve"><value>Còn {0} bản</value></data>
+  <data name="book.onsite" xml:space="preserve"><value>Chỉ đọc tại chỗ</value></data>
+  <data name="book.unavailable" xml:space="preserve"><value>Tạm hết</value></data>
+  <data name="book.cover.alt" xml:space="preserve"><value>Bìa sách {0}</value></data>
+  <data name="catalog.title" xml:space="preserve"><value>Tra cứu sách</value></data>
+  <data name="catalog.keyword" xml:space="preserve"><value>Từ khóa</value></data>
+  <data name="catalog.keyword.ph" xml:space="preserve"><value>Tên sách, tác giả, ISBN...</value></data>
+  <data name="catalog.category" xml:space="preserve"><value>Thể loại</value></data>
+  <data name="catalog.category.all" xml:space="preserve"><value>Tất cả thể loại</value></data>
+  <data name="catalog.sort" xml:space="preserve"><value>Sắp xếp</value></data>
+  <data name="catalog.sort.title" xml:space="preserve"><value>Tên A → Z</value></data>
+  <data name="catalog.sort.new" xml:space="preserve"><value>Mới nhập</value></data>
+  <data name="catalog.availableOnly" xml:space="preserve"><value>Chỉ sách còn mượn được</value></data>
+  <data name="catalog.filter" xml:space="preserve"><value>Lọc</value></data>
+  <data name="catalog.found.prefix" xml:space="preserve"><value>Tìm thấy</value></data>
+  <data name="catalog.found.suffix" xml:space="preserve"><value>đầu sách</value></data>
+  <data name="catalog.clear" xml:space="preserve"><value>Xóa bộ lọc</value></data>
+  <data name="catalog.empty" xml:space="preserve"><value>Không có sách nào phù hợp với bộ lọc.</value></data>
+  <data name="catalog.more" xml:space="preserve"><value>Xem thêm</value></data>
+  <data name="catalog.error" xml:space="preserve"><value>Không tải được dữ liệu. Vui lòng thử lại.</value></data>
+  <data name="details.borrowable" xml:space="preserve"><value>Còn {0} bản có thể mượn về</value></data>
+  <data name="details.onsite.only" xml:space="preserve"><value>Chỉ có bản đọc tại chỗ</value></data>
+  <data name="details.none" xml:space="preserve"><value>Tạm hết sách</value></data>
+  <data name="details.onsite.extra" xml:space="preserve"><value>+ {0} bản đọc tại chỗ</value></data>
+  <data name="details.isbn" xml:space="preserve"><value>ISBN</value></data>
+  <data name="details.publisher" xml:space="preserve"><value>Nhà xuất bản</value></data>
+  <data name="details.year" xml:space="preserve"><value>Năm xuất bản</value></data>
+  <data name="details.pages" xml:space="preserve"><value>Số trang</value></data>
+  <data name="details.fee" xml:space="preserve"><value>Phí thuê</value></data>
+  <data name="details.free" xml:space="preserve"><value>Miễn phí</value></data>
+  <data name="details.copies" xml:space="preserve"><value>Tổng số bản</value></data>
+  <data name="details.wish.add" xml:space="preserve"><value>Thêm vào giỏ quan tâm</value></data>
+  <data name="details.wish.remove" xml:space="preserve"><value>Bỏ khỏi giỏ quan tâm</value></data>
+  <data name="details.howto" xml:space="preserve"><value>Để mượn sách, hãy mang mã thành viên đến quầy.</value></data>
+  <data name="details.related" xml:space="preserve"><value>Sách cùng thể loại</value></data>
+  <data name="pricing.title" xml:space="preserve"><value>Bảng giá thẻ thành viên</value></data>
+  <data name="pricing.subtitle" xml:space="preserve"><value>Đọc sách tại thư viện không cần thẻ. Thẻ thành viên cho phép mượn sách về nhà.</value></data>
+  <data name="pricing.valid" xml:space="preserve"><value>hiệu lực {0} tháng</value></data>
+  <data name="pricing.max" xml:space="preserve"><value>Mượn tối đa {0} cuốn cùng lúc</value></data>
+  <data name="pricing.days" xml:space="preserve"><value>Mỗi cuốn giữ {0} ngày</value></data>
+  <data name="pricing.renew" xml:space="preserve"><value>Gia hạn tối đa {0} lần</value></data>
+  <data name="pricing.deposit" xml:space="preserve"><value>Tiền cọc {0} (hoàn lại khi trả thẻ)</value></data>
+  <data name="pricing.none" xml:space="preserve"><value>Hiện chưa có gói nào đang bán.</value></data>
+  <data name="pricing.how.title" xml:space="preserve"><value>Cách đăng ký</value></data>
+  <data name="pricing.how.1" xml:space="preserve"><value>Đăng ký tài khoản trên website (nút Đăng ký ở góc trên).</value></data>
+  <data name="pricing.how.2" xml:space="preserve"><value>Đến quầy, nhân viên bán thẻ và thu phí, tiền cọc. Bạn nhận mã thành viên.</value></data>
+  <data name="pricing.how.3" xml:space="preserve"><value>Mượn sách tại quầy, theo dõi hạn trả và gia hạn trực tuyến trong mục "Tài khoản của tôi".</value></data>
+  <data name="pricing.rules.title" xml:space="preserve"><value>Quy định cần biết</value></data>
+  <data name="pricing.rules.late" xml:space="preserve"><value>Trả trễ phạt {0} mỗi cuốn mỗi ngày (tối đa bằng giá sách).</value></data>
+  <data name="pricing.rules.lost" xml:space="preserve"><value>Sách mất hoặc hỏng phải đền theo giá của sách.</value></data>
+  <data name="pricing.rules.onsite" xml:space="preserve"><value>Một số sách chỉ đọc tại chỗ, không mượn về.</value></data>
+  <data name="pricing.rules.block" xml:space="preserve"><value>Còn nợ hoặc có sách quá hạn thì chưa mượn thêm được.</value></data>
+  <data name="wish.title" xml:space="preserve"><value>Giỏ sách quan tâm</value></data>
+  <data name="wish.clear" xml:space="preserve"><value>Xóa giỏ</value></data>
+  <data name="wish.clear.confirm" xml:space="preserve"><value>Xóa toàn bộ giỏ quan tâm?</value></data>
+  <data name="wish.note" xml:space="preserve"><value>Danh sách này lưu theo phiên truy cập hiện tại. Bạn có thể mang danh sách đến quầy để mượn.</value></data>
+  <data name="wish.empty" xml:space="preserve"><value>Giỏ đang trống.</value></data>
+  <data name="wish.remove" xml:space="preserve"><value>Bỏ khỏi giỏ</value></data>
+  <data name="wish.added" xml:space="preserve"><value>Đã thêm sách vào giỏ quan tâm.</value></data>
+  <data name="wish.exists" xml:space="preserve"><value>Sách đã có trong giỏ quan tâm.</value></data>
+  <data name="wish.full" xml:space="preserve"><value>Giỏ quan tâm chỉ chứa tối đa {0} sách.</value></data>
+  <data name="wish.removed" xml:space="preserve"><value>Đã bỏ sách khỏi giỏ quan tâm.</value></data>
+  <data name="wish.cleared" xml:space="preserve"><value>Đã xóa giỏ quan tâm.</value></data>
+  <data name="my.menu.overview" xml:space="preserve"><value>Tổng quan</value></data>
+  <data name="my.menu.loans" xml:space="preserve"><value>Sách đang mượn</value></data>
+  <data name="my.menu.history" xml:space="preserve"><value>Lịch sử mượn trả</value></data>
+  <data name="my.menu.payments" xml:space="preserve"><value>Thanh toán và nợ</value></data>
+  <data name="my.menu.profile" xml:space="preserve"><value>Hồ sơ cá nhân</value></data>
+  <data name="my.menu.password" xml:space="preserve"><value>Đổi mật khẩu</value></data>
+  <data name="my.noprofile.title" xml:space="preserve"><value>Tài khoản chưa có hồ sơ thành viên</value></data>
+  <data name="my.noprofile.text" xml:space="preserve"><value>Hãy đến quầy thư viện và cho nhân viên biết email đăng nhập để được hỗ trợ liên kết hồ sơ.</value></data>
+  <data name="my.home" xml:space="preserve"><value>Về trang chủ</value></data>
+  <data name="my.hello" xml:space="preserve"><value>Xin chào, {0}</value></data>
+  <data name="my.membercode" xml:space="preserve"><value>Mã thành viên</value></data>
+  <data name="my.blockers.title" xml:space="preserve"><value>Hiện bạn chưa thể mượn thêm sách:</value></data>
+  <data name="my.block.locked" xml:space="preserve"><value>Tài khoản đang bị khóa.</value></data>
+  <data name="my.block.nocard" xml:space="preserve"><value>Bạn chưa có thẻ còn hiệu lực.</value></data>
+  <data name="my.block.onsiteplan" xml:space="preserve"><value>Gói thẻ hiện tại chỉ cho đọc tại chỗ.</value></data>
+  <data name="my.block.full" xml:space="preserve"><value>Bạn đã mượn đủ {0} cuốn (tối đa của gói).</value></data>
+  <data name="my.block.overdue" xml:space="preserve"><value>Bạn còn {0} cuốn quá hạn, cần trả trước khi mượn tiếp.</value></data>
+  <data name="my.block.unpaid" xml:space="preserve"><value>Bạn còn nợ {0}, cần thanh toán trước khi mượn tiếp.</value></data>
+  <data name="my.duesoon" xml:space="preserve"><value>Bạn có {0} cuốn sắp đến hạn trong 3 ngày tới.</value></data>
+  <data name="my.duesoon.link" xml:space="preserve"><value>Xem và gia hạn</value></data>
+  <data name="my.card.title" xml:space="preserve"><value>Thẻ thành viên</value></data>
+  <data name="my.card.valid" xml:space="preserve"><value>Hiệu lực đến {0} (còn {1} ngày)</value></data>
+  <data name="my.card.limits" xml:space="preserve"><value>Mượn tối đa {0} cuốn · {1} ngày/cuốn</value></data>
+  <data name="my.card.none" xml:space="preserve"><value>Chưa có thẻ hiệu lực</value></data>
+  <data name="my.card.none.help" xml:space="preserve"><value>Đến quầy để mua hoặc gia hạn thẻ.</value></data>
+  <data name="my.loans.count" xml:space="preserve"><value>Đang mượn</value></data>
+  <data name="my.overdue.count" xml:space="preserve"><value>{0} cuốn quá hạn</value></data>
+  <data name="my.owed" xml:space="preserve"><value>Còn nợ</value></data>
+  <data name="my.deposit" xml:space="preserve"><value>Cọc đang giữ: {0}</value></data>
+  <data name="loans.title" xml:space="preserve"><value>Sách đang mượn</value></data>
+  <data name="loans.none" xml:space="preserve"><value>Bạn không có cuốn nào đang mượn.</value></data>
+  <data name="loans.col.book" xml:space="preserve"><value>Sách</value></data>
+  <data name="loans.col.loandate" xml:space="preserve"><value>Ngày mượn</value></data>
+  <data name="loans.col.due" xml:space="preserve"><value>Hạn trả</value></data>
+  <data name="loans.col.renewed" xml:space="preserve"><value>Đã gia hạn</value></data>
+  <data name="loans.renew" xml:space="preserve"><value>Gia hạn</value></data>
+  <data name="loans.overdue.days" xml:space="preserve"><value>quá hạn {0} ngày</value></data>
+  <data name="loans.today" xml:space="preserve"><value>hết hạn hôm nay</value></data>
+  <data name="loans.left" xml:space="preserve"><value>còn {0} ngày</value></data>
+  <data name="loans.return" xml:space="preserve"><value>Hãy trả sách tại quầy</value></data>
+  <data name="loans.norenew" xml:space="preserve"><value>Hết lượt gia hạn</value></data>
+  <data name="loans.note" xml:space="preserve"><value>Mỗi lần gia hạn cộng thêm đúng số ngày mượn của gói. Sách đã quá hạn thì không gia hạn được, vui lòng trả tại quầy.</value></data>
+  <data name="loans.renewed.ok" xml:space="preserve"><value>Đã gia hạn "{0}" thêm {1} ngày, hạn trả mới {2}.</value></data>
+  <data name="loans.renewed.fail" xml:space="preserve"><value>Không gia hạn được "{0}": {1}</value></data>
+  <data name="loans.err.title" xml:space="preserve"><value>Không thể gia hạn</value></data>
+  <data name="renew.err.returned" xml:space="preserve"><value>Sách này đã được trả.</value></data>
+  <data name="renew.err.locked" xml:space="preserve"><value>Tài khoản đang bị khóa.</value></data>
+  <data name="renew.err.nocard" xml:space="preserve"><value>Bạn chưa có thẻ còn hiệu lực.</value></data>
+  <data name="renew.err.item_overdue" xml:space="preserve"><value>Sách đã quá hạn, không gia hạn được. Hãy trả sách.</value></data>
+  <data name="renew.err.other_overdue" xml:space="preserve"><value>Bạn còn sách quá hạn khác.</value></data>
+  <data name="renew.err.max_renewals" xml:space="preserve"><value>Đã gia hạn tối đa {0} lần.</value></data>
+  <data name="js.session" xml:space="preserve"><value>Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.</value></data>
+  <data name="js.renew.fail" xml:space="preserve"><value>Không gia hạn được. Vui lòng thử lại.</value></data>
+  <data name="history.title" xml:space="preserve"><value>Lịch sử mượn trả</value></data>
+  <data name="history.col.returned" xml:space="preserve"><value>Ngày trả</value></data>
+  <data name="history.col.result" xml:space="preserve"><value>Kết quả</value></data>
+  <data name="history.lost" xml:space="preserve"><value>Mất sách</value></data>
+  <data name="history.returned" xml:space="preserve"><value>Đã trả</value></data>
+  <data name="history.none" xml:space="preserve"><value>Chưa có lịch sử.</value></data>
+  <data name="pay.title" xml:space="preserve"><value>Thanh toán và nợ</value></data>
+  <data name="pay.debt" xml:space="preserve"><value>Bạn đang nợ {0}. Vui lòng thanh toán tại quầy để tiếp tục mượn sách.</value></data>
+  <data name="pay.col.receipt" xml:space="preserve"><value>Biên lai</value></data>
+  <data name="pay.col.date" xml:space="preserve"><value>Ngày</value></data>
+  <data name="pay.col.type" xml:space="preserve"><value>Loại</value></data>
+  <data name="pay.col.amount" xml:space="preserve"><value>Số tiền</value></data>
+  <data name="pay.col.method" xml:space="preserve"><value>Hình thức</value></data>
+  <data name="pay.col.status" xml:space="preserve"><value>Trạng thái</value></data>
+  <data name="pay.none" xml:space="preserve"><value>Chưa có giao dịch.</value></data>
+  <data name="paytype.MembershipFee" xml:space="preserve"><value>Phí thẻ</value></data>
+  <data name="paytype.Deposit" xml:space="preserve"><value>Tiền cọc</value></data>
+  <data name="paytype.DepositRefund" xml:space="preserve"><value>Hoàn cọc</value></data>
+  <data name="paytype.RentalFee" xml:space="preserve"><value>Phí thuê sách</value></data>
+  <data name="paytype.LateFine" xml:space="preserve"><value>Phạt trả trễ</value></data>
+  <data name="paytype.Compensation" xml:space="preserve"><value>Đền sách</value></data>
+  <data name="paymethod.Cash" xml:space="preserve"><value>Tiền mặt</value></data>
+  <data name="paymethod.Transfer" xml:space="preserve"><value>Chuyển khoản</value></data>
+  <data name="paystatus.Paid" xml:space="preserve"><value>Đã thu</value></data>
+  <data name="paystatus.Unpaid" xml:space="preserve"><value>Còn nợ</value></data>
+  <data name="paystatus.Voided" xml:space="preserve"><value>Đã hủy</value></data>
+  <data name="profile.title" xml:space="preserve"><value>Hồ sơ cá nhân</value></data>
+  <data name="profile.phone.help" xml:space="preserve"><value>Muốn đổi số điện thoại, vui lòng đến quầy.</value></data>
+  <data name="profile.save" xml:space="preserve"><value>Lưu thay đổi</value></data>
+  <data name="profile.saved" xml:space="preserve"><value>Đã cập nhật hồ sơ.</value></data>
+  <data name="profile.dob.future" xml:space="preserve"><value>Ngày sinh không được ở tương lai.</value></data>
+  <data name="reg.title" xml:space="preserve"><value>Đăng ký tài khoản</value></data>
+  <data name="reg.subtitle" xml:space="preserve"><value>Tạo tài khoản để xem thẻ, sách đang mượn và gia hạn trực tuyến.</value></data>
+  <data name="reg.membercode.help" xml:space="preserve"><value>Đã từng đăng ký thẻ tại quầy? Nhập mã thành viên và đúng số điện thoại đã đăng ký để liên kết thẻ hiện có.</value></data>
+  <data name="reg.submit" xml:space="preserve"><value>Đăng ký</value></data>
+  <data name="reg.haveaccount" xml:space="preserve"><value>Đã có tài khoản?</value></data>
+  <data name="reg.err.mismatch" xml:space="preserve"><value>Mã thành viên và số điện thoại không khớp, hoặc hồ sơ này đã được liên kết với một tài khoản khác.</value></data>
+  <data name="reg.err.phoneexists" xml:space="preserve"><value>Số điện thoại này đã có hồ sơ tại thư viện. Hãy nhập mã thành viên (ghi trên biên lai mua thẻ) để liên kết, hoặc đến quầy để được hỗ trợ.</value></data>
+  <data name="login.title" xml:space="preserve"><value>Đăng nhập</value></data>
+  <data name="login.submit" xml:space="preserve"><value>Đăng nhập</value></data>
+  <data name="login.noaccount" xml:space="preserve"><value>Chưa có tài khoản?</value></data>
+  <data name="login.err.invalid" xml:space="preserve"><value>Email hoặc mật khẩu không đúng.</value></data>
+  <data name="login.err.locked" xml:space="preserve"><value>Tài khoản bị khóa tạm thời do đăng nhập sai nhiều lần. Vui lòng thử lại sau {0} phút.</value></data>
+  <data name="login.err.disabled" xml:space="preserve"><value>Tài khoản đã bị vô hiệu hóa. Vui lòng liên hệ thư viện.</value></data>
+  <data name="Họ và tên" xml:space="preserve"><value>Họ và tên</value></data>
+  <data name="Vui lòng nhập họ tên" xml:space="preserve"><value>Vui lòng nhập họ tên</value></data>
+  <data name="Email (dùng để đăng nhập)" xml:space="preserve"><value>Email (dùng để đăng nhập)</value></data>
+  <data name="Vui lòng nhập email" xml:space="preserve"><value>Vui lòng nhập email</value></data>
+  <data name="Email không hợp lệ" xml:space="preserve"><value>Email không hợp lệ</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Số điện thoại" xml:space="preserve"><value>Số điện thoại</value></data>
+  <data name="Vui lòng nhập số điện thoại" xml:space="preserve"><value>Vui lòng nhập số điện thoại</value></data>
+  <data name="Số điện thoại không hợp lệ (ví dụ 0901234567)" xml:space="preserve"><value>Số điện thoại không hợp lệ (ví dụ 0901234567)</value></data>
+  <data name="Mã thành viên (nếu đã có thẻ tại quầy)" xml:space="preserve"><value>Mã thành viên (nếu đã có thẻ tại quầy)</value></data>
+  <data name="Mật khẩu" xml:space="preserve"><value>Mật khẩu</value></data>
+  <data name="Vui lòng nhập mật khẩu" xml:space="preserve"><value>Vui lòng nhập mật khẩu</value></data>
+  <data name="Mật khẩu từ 6 ký tự trở lên" xml:space="preserve"><value>Mật khẩu từ 6 ký tự trở lên</value></data>
+  <data name="Nhập lại mật khẩu" xml:space="preserve"><value>Nhập lại mật khẩu</value></data>
+  <data name="Mật khẩu xác nhận không khớp" xml:space="preserve"><value>Mật khẩu xác nhận không khớp</value></data>
+  <data name="Ghi nhớ đăng nhập" xml:space="preserve"><value>Ghi nhớ đăng nhập</value></data>
+  <data name="Email liên hệ" xml:space="preserve"><value>Email liên hệ</value></data>
+  <data name="Địa chỉ" xml:space="preserve"><value>Địa chỉ</value></data>
+  <data name="Ngày sinh" xml:space="preserve"><value>Ngày sinh</value></data>
+</root>

@@ -1,0 +1,49 @@
+@model MembershipPlan
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<input type="hidden" asp-for="Id" />
+
+<div class="row g-3">
+    <div class="col-12">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" type="number" min="0" step="1000" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="DurationMonths" class="form-label"></label>
+        <input asp-for="DurationMonths" type="number" min="1" max="120" class="form-control" />
+        <span asp-validation-for="DurationMonths" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="DepositAmount" class="form-label"></label>
+        <input asp-for="DepositAmount" type="number" min="0" step="1000" class="form-control" />
+        <span asp-validation-for="DepositAmount" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="MaxBooks" class="form-label"></label>
+        <input asp-for="MaxBooks" type="number" min="0" max="100" class="form-control" />
+        <span asp-validation-for="MaxBooks" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="LoanDays" class="form-label"></label>
+        <input asp-for="LoanDays" type="number" min="1" max="365" class="form-control" />
+        <span asp-validation-for="LoanDays" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="MaxRenewals" class="form-label"></label>
+        <input asp-for="MaxRenewals" type="number" min="0" max="10" class="form-control" />
+        <span asp-validation-for="MaxRenewals" class="text-danger"></span>
+    </div>
+    <div class="col-12">
+        <div class="form-check">
+            <input asp-for="IsActive" class="form-check-input" />
+            <label asp-for="IsActive" class="form-check-label"></label>
+        </div>
+        <div class="form-text">Bỏ chọn để ngừng bán gói này mà vẫn giữ các thẻ đã bán.</div>
+    </div>
+</div>

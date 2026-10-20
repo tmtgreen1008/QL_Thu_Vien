@@ -1,0 +1,69 @@
+﻿@model HomeVm
+@{
+    ViewData["Title"] = T["nav.home"];
+}
+
+<section class="hero mb-4">
+    <h1 class="display-6 fw-bold">@T["home.hero.title"]</h1>
+    <p class="lead mb-4">@T["home.hero.sub"]</p>
+    <form asp-controller="Catalog" asp-action="Index" method="get" class="row g-2" style="max-width:640px">
+        <div class="col">
+            <input name="q" class="form-control form-control-lg" placeholder="@T["home.search.ph"]" />
+        </div>
+        <div class="col-auto"><button type="submit" class="btn btn-lg btn-accent">@T["home.search.btn"]</button></div>
+    </form>
+</section>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3"><div class="stat-box"><div class="num">@Model.Titles.ToString("N0")</div><div class="text-muted small">@T["home.stat.titles"]</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat-box"><div class="num">@Model.Copies.ToString("N0")</div><div class="text-muted small">@T["home.stat.copies"]</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat-box"><div class="num">@Model.Categories.Count</div><div class="text-muted small">@T["home.stat.categories"]</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat-box"><div class="num">8:00 - 21:00</div><div class="text-muted small">@T["home.stat.hours"]</div></div></div>
+</div>
+
+@if (Model.Categories.Any())
+{
+    <h2 class="h5 section-title mb-2">@T["home.categories"]</h2>
+    <div class="d-flex flex-wrap gap-2 mb-4">
+        @foreach (var c in Model.Categories)
+        {
+            <a class="chip" asp-controller="Catalog" asp-action="Index" asp-route-categoryId="@c.Id">@c.Name <span class="text-muted">(@c.Titles)</span></a>
+        }
+    </div>
+}
+
+@if (Model.Recent.Any())
+{
+    <h2 class="h5 section-title mb-2">@T["home.recent"]</h2>
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3 mb-4">
+        @foreach (var b in Model.Recent)
+        {
+            <div class="col"><partial name="_BookCard" model="b" /></div>
+        }
+    </div>
+}
+
+<div class="d-flex justify-content-between align-items-end mb-2">
+    <h2 class="h5 section-title m-0">@T["home.latest"]</h2>
+    <a asp-controller="Catalog" asp-action="Index" asp-route-sort="new">@T["home.viewall"]</a>
+</div>
+<div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3 mb-5">
+    @foreach (var b in Model.Latest)
+    {
+        <div class="col"><partial name="_BookCard" model="b" /></div>
+    }
+</div>
+
+@if (!User.Identity!.IsAuthenticated)
+{
+    <section class="p-4 rounded-3 bg-white shadow-sm d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div>
+            <h2 class="h5 mb-1">@T["home.cta.title"]</h2>
+            <div class="text-muted">@T["home.cta.text"]</div>
+        </div>
+        <div class="d-flex gap-2">
+            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register">@T["auth.register"]</a>
+            <a class="btn btn-outline-secondary" asp-controller="Pricing" asp-action="Index">@T["nav.pricing"]</a>
+        </div>
+    </section>
+}

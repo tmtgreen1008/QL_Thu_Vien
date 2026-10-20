@@ -1,0 +1,72 @@
+@model DashboardVm
+@using System.Globalization
+@{
+    ViewData["Title"] = "Bảng điều khiển";
+    var vi = new CultureInfo("vi-VN");
+    string Money(decimal v) => v.ToString("N0", vi) + " đ";
+}
+
+<h2 class="h4 mb-4">Bảng điều khiển</h2>
+
+<div class="row g-3 mb-3">
+    <div class="col-6 col-lg-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Đầu sách</div>
+            <div class="fs-3">@Model.BookTitles.ToString("N0", vi)</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Bản sao (sẵn sàng / tổng)</div>
+            <div class="fs-3">@Model.AvailableCopies.ToString("N0", vi) / @Model.TotalCopies.ToString("N0", vi)</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Khách hàng</div>
+            <div class="fs-3">@Model.Members.ToString("N0", vi)</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Đang mượn / quá hạn</div>
+            <div class="fs-3">
+                @Model.BorrowedItems
+                <span class="@(Model.OverdueItems > 0 ? "text-danger" : "text-muted")">/ @Model.OverdueItems</span>
+            </div>
+            @if (Model.OverdueItems > 0)
+            {
+                <a asp-controller="Returns" asp-action="Index" asp-route-overdueOnly="true" class="small">Xem sách quá hạn</a>
+            }
+        </div></div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Doanh thu hôm nay</div>
+            <div class="fs-3">@Money(Model.RevenueToday)</div>
+        </div></div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Doanh thu tháng này</div>
+            <div class="fs-3">@Money(Model.RevenueThisMonth)</div>
+        </div></div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Tiền cọc đang giữ</div>
+            <div class="fs-3">@Money(Model.HeldDeposits)</div>
+        </div></div>
+    </div>
+</div>
+<p class="text-muted small">Doanh thu gồm phí thẻ, phí thuê, phạt trễ và tiền đền; không gồm tiền cọc (tiền giữ hộ, sẽ hoàn lại).</p>
+
+<div class="d-flex flex-wrap gap-2">
+    <a asp-controller="Loans" asp-action="Create" class="btn btn-primary">Cho mượn sách</a>
+    <a asp-controller="Returns" asp-action="Index" class="btn btn-success">Trả sách</a>
+    <a asp-controller="Payments" asp-action="Index" class="btn btn-outline-secondary">Sổ giao dịch</a>
+    <a asp-controller="Reports" asp-action="Revenue" class="btn btn-outline-secondary">Báo cáo</a>
+</div>

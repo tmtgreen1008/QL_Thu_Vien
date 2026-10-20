@@ -1,0 +1,16 @@
+@model Category
+@{
+    ViewData["Title"] = "Thêm thể loại";
+}
+
+<h2 class="h4 mb-3">Thêm thể loại</h2>
+
+<form asp-action="Create" method="post" style="max-width:640px">
+    <partial name="_Form" model="Model" />
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Hủy</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

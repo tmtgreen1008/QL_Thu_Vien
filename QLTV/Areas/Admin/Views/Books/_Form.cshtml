@@ -1,0 +1,110 @@
+@model BookFormVm
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<input type="hidden" asp-for="Id" />
+
+<div class="row g-3">
+    <div class="col-md-8">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="ISBN" class="form-label"></label>
+        <input asp-for="ISBN" class="form-control" />
+        <span asp-validation-for="ISBN" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="AuthorId" class="form-label"></label>
+        <select asp-for="AuthorId" asp-items="Model.Authors" class="form-select">
+            <option value="0">-- Chọn tác giả --</option>
+        </select>
+        <span asp-validation-for="AuthorId" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="CategoryId" class="form-label"></label>
+        <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select">
+            <option value="0">-- Chọn thể loại --</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Publisher" class="form-label"></label>
+        <input asp-for="Publisher" class="form-control" />
+        <span asp-validation-for="Publisher" class="text-danger"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="PublishYear" class="form-label"></label>
+        <input asp-for="PublishYear" class="form-control" />
+        <span asp-validation-for="PublishYear" class="text-danger"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="PageCount" class="form-label"></label>
+        <input asp-for="PageCount" class="form-control" />
+        <span asp-validation-for="PageCount" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="RentalFee" class="form-label"></label>
+        <input asp-for="RentalFee" type="number" min="0" step="1000" class="form-control" />
+        <span asp-validation-for="RentalFee" class="text-danger"></span>
+        <div class="form-text">Nhập 0 nếu miễn phí thuê.</div>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="ReplacementPrice" class="form-label"></label>
+        <input asp-for="ReplacementPrice" type="number" min="0" step="1000" class="form-control" />
+        <span asp-validation-for="ReplacementPrice" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="col-12">
+        <label asp-for="CoverFile" class="form-label"></label>
+        @if (!string.IsNullOrEmpty(Model.ExistingCoverPath))
+        {
+            <div class="mb-2">
+                <img src="@Model.ExistingCoverPath" alt="Ảnh bìa hiện tại" style="height:120px;border-radius:4px" class="border" />
+            </div>
+        }
+        <input asp-for="CoverFile" class="form-control" accept=".jpg,.jpeg,.png,.webp" />
+        <span asp-validation-for="CoverFile" class="text-danger"></span>
+        @if (!string.IsNullOrEmpty(Model.ExistingCoverPath))
+        {
+            <div class="form-check mt-2">
+                <input asp-for="RemoveCover" class="form-check-input" />
+                <label asp-for="RemoveCover" class="form-check-label"></label>
+            </div>
+        }
+    </div>
+
+    @if (Model.IsEdit)
+    {
+        <div class="col-12">
+            <div class="form-check">
+                <input asp-for="IsActive" class="form-check-input" />
+                <label asp-for="IsActive" class="form-check-label"></label>
+            </div>
+            <div class="form-text">Bỏ chọn để ngừng cho mượn mà vẫn giữ lịch sử.</div>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-4">
+            <label asp-for="InitialCopies" class="form-label"></label>
+            <input asp-for="InitialCopies" type="number" min="0" max="50" class="form-control" />
+            <span asp-validation-for="InitialCopies" class="text-danger"></span>
+            <div class="form-text">Mã vạch được tự sinh.</div>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="ShelfLocation" class="form-label"></label>
+            <input asp-for="ShelfLocation" class="form-control" placeholder="Ví dụ: Kệ VN-1" />
+            <span asp-validation-for="ShelfLocation" class="text-danger"></span>
+        </div>
+    }
+</div>

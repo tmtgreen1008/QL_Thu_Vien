@@ -1,0 +1,131 @@
+@model ReturnVm
+@using System.Globalization
+@{
+    ViewData["Title"] = "Xác nhận trả sách";
+    var vi = new CultureInfo("vi-VN");
+    var inv = CultureInfo.InvariantCulture;
+    string Money(decimal v) => v.ToString("N0", vi) + " đ";
+}
+
+<h2 class="h4 mb-3">Xác nhận trả sách</h2>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <table class="table table-sm">
+            <tr><th style="width:130px">Sách</th><td>@Model.BookTitle</td></tr>
+            <tr><th>Mã vạch</th><td class="font-monospace">@Model.Barcode</td></tr>
+            <tr><th>Khách</th>
+                <td><a asp-controller="Members" asp-action="Details" asp-route-id="@Model.MemberId">@Model.MemberName</a>
+                    <span class="font-monospace text-muted small">@Model.MemberCode</span></td></tr>
+            <tr><th>Ngày mượn</th><td>@Model.LoanDate.ToString("dd/MM/yyyy")</td></tr>
+            <tr><th>Hạn trả</th><td>@Model.DueDate.ToString("dd/MM/yyyy")</td></tr>
+            <tr><th>Trả trễ</th>
+                <td class="@(Model.DaysLate > 0 ? "text-danger fw-semibold" : "")">
+                    @(Model.DaysLate > 0 ? $"{Model.DaysLate} ngày" : "Đúng hạn")
+                </td></tr>
+            <tr><th>Phí thuê</th><td>@(Model.RentalFee == 0 ? "Miễn phí" : Money(Model.RentalFee))</td></tr>
+            <tr><th>Phạt trễ</th>
+                <td>@Money(Model.LateFee)
+                    @if (Model.DaysLate > 0) { <span class="text-muted small">(@Model.DaysLate ngày × @Money(Model.LateFeePerDay), tối đa bằng giá sách)</span> }
+                </td></tr>
+            <tr><th>Giá đền của sách</th><td>@Money(Model.ReplacementPrice)</td></tr>
+        </table>
+    </div>
+
+    <div class="col-lg-7">
+        <form asp-action="Process" asp-route-loanItemId="@Model.LoanItemId" method="post" id="returnForm"
+              data-rental="@Model.RentalFee.ToString("0.##", inv)"
+              data-late="@Model.LateFee.ToString("0.##", inv)"
+              data-repl="@Model.ReplacementPrice.ToString("0.##", inv)">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <div class="form-label">Tình trạng sách khi trả</div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="Outcome" id="o0" value="0" checked="@(Model.Outcome == ReturnOutcome.Normal)" />
+                    <label class="form-check-label" for="o0">Trả bình thường (thu phí thuê và phạt trễ nếu có)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="Outcome" id="o1" value="1" checked="@(Model.Outcome == ReturnOutcome.Damaged)" />
+                    <label class="form-check-label" for="o1">Sách bị hỏng (thu thêm tiền đền)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="Outcome" id="o2" value="2" checked="@(Model.Outcome == ReturnOutcome.Lost)" />
+                    <label class="form-check-label" for="o2">Sách bị mất (chỉ thu tiền đền)</label>
+                </div>
+            </div>
+
+            <div class="mb-3" id="condBox">
+                <label asp-for="Condition" class="form-label"></label>
+                <select asp-for="Condition" asp-items="EnumLabels.ConditionOptions(Model.Condition)" class="form-select" style="max-width:240px"></select>
+            </div>
+
+            <div class="mb-3" id="compBox" style="display:none">
+                <label asp-for="CompensationAmount" class="form-label"></label>
+                <input asp-for="CompensationAmount" type="number" min="0" step="1000" class="form-control" style="max-width:240px" />
+                <span asp-validation-for="CompensationAmount" class="text-danger"></span>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-sm-6">
+                    <label asp-for="Method" class="form-label"></label>
+                    <select asp-for="Method" asp-items="PaymentLabels.MethodOptions(Model.Method)" class="form-select"></select>
+                </div>
+                <div class="col-sm-6 d-flex align-items-end">
+                    <div class="form-check">
+                        <input asp-for="CollectNow" class="form-check-input" />
+                        <label asp-for="CollectNow" class="form-check-label"></label>
+                        <div class="form-text">Bỏ chọn để ghi nợ khoản này.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-light border d-flex justify-content-between align-items-center">
+                <span>Tổng phải thu</span>
+                <span class="fs-4 fw-semibold" id="totalPreview">0 đ</span>
+            </div>
+
+            <button type="submit" class="btn btn-success">Xác nhận trả sách</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Hủy</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            var form = document.getElementById('returnForm');
+            var rental = parseFloat(form.dataset.rental) || 0;
+            var late = parseFloat(form.dataset.late) || 0;
+            var repl = parseFloat(form.dataset.repl) || 0;
+            var comp = document.getElementById('CompensationAmount');
+            var total = document.getElementById('totalPreview');
+            var compBox = document.getElementById('compBox');
+            var condBox = document.getElementById('condBox');
+
+            function outcome() { return form.querySelector('input[name="Outcome"]:checked').value; }
+            function fmt(n) { return n.toLocaleString('vi-VN') + ' đ'; }
+
+            function recalc(setDefault) {
+                var o = outcome();
+                compBox.style.display = (o === '0') ? 'none' : '';
+                condBox.style.display = (o === '0') ? '' : 'none';
+                if (setDefault) {
+                    if (o === '2') comp.value = repl;
+                    else if (o === '1') comp.value = Math.round(repl / 2 / 1000) * 1000;
+                    else comp.value = 0;
+                }
+                var c = parseFloat(comp.value) || 0;
+                var t = (o === '0') ? rental + late : (o === '1' ? rental + late + c : c);
+                total.textContent = fmt(t);
+            }
+
+            form.querySelectorAll('input[name="Outcome"]').forEach(function (r) {
+                r.addEventListener('change', function () { recalc(true); });
+            });
+            comp.addEventListener('input', function () { recalc(false); });
+            recalc(false);
+        })();
+    </script>
+}

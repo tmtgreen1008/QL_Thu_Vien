@@ -1,0 +1,53 @@
+@model PricingVm
+@{
+    ViewData["Title"] = T["pricing.title"];
+    string Money(decimal v) => v.ToString("N0") + " " + T["currency"];
+}
+
+<h1 class="h3 section-title mb-1">@T["pricing.title"]</h1>
+<p class="text-muted mb-4">@T["pricing.subtitle"]</p>
+
+<div class="row g-3 mb-4">
+    @foreach (var p in Model.Plans)
+    {
+        <div class="col-md-4">
+            <div class="card plan-card h-100">
+                <div class="card-body">
+                    <h2 class="h5">@p.Name</h2>
+                    <div class="price mb-1">@Money(p.Price)</div>
+                    <div class="text-muted small mb-3">@T["pricing.valid", p.DurationMonths]</div>
+                    <ul class="list-unstyled mb-0">
+                        <li>@T["pricing.max", p.MaxBooks]</li>
+                        <li>@T["pricing.days", p.LoanDays]</li>
+                        <li>@T["pricing.renew", p.MaxRenewals]</li>
+                        <li>@T["pricing.deposit", Money(p.DepositAmount)]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+    @if (!Model.Plans.Any())
+    {
+        <div class="col-12 text-muted">@T["pricing.none"]</div>
+    }
+</div>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <h2 class="h5 section-title">@T["pricing.how.title"]</h2>
+        <ol>
+            <li>@T["pricing.how.1"]</li>
+            <li>@T["pricing.how.2"]</li>
+            <li>@T["pricing.how.3"]</li>
+        </ol>
+    </div>
+    <div class="col-md-6">
+        <h2 class="h5 section-title">@T["pricing.rules.title"]</h2>
+        <ul>
+            <li>@T["pricing.rules.late", Money(Model.LateFeePerDay)]</li>
+            <li>@T["pricing.rules.lost"]</li>
+            <li>@T["pricing.rules.onsite"]</li>
+            <li>@T["pricing.rules.block"]</li>
+        </ul>
+    </div>
+</div>

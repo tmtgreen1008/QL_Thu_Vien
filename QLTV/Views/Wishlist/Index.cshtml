@@ -1,0 +1,38 @@
+@model WishlistVm
+@{
+    ViewData["Title"] = T["wish.title"];
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 section-title m-0">@T["wish.title"]</h1>
+    @if (Model.Items.Any())
+    {
+        <form asp-action="Clear" method="post" data-confirm="@T["wish.clear.confirm"]" onsubmit="return confirm(this.dataset.confirm);">
+            <button type="submit" class="btn btn-outline-danger btn-sm">@T["wish.clear"]</button>
+        </form>
+    }
+</div>
+
+<p class="text-muted">@T["wish.note"]</p>
+
+@if (!Model.Items.Any())
+{
+    <div class="text-center text-muted py-5">
+        @T["wish.empty"] <a asp-controller="Catalog" asp-action="Index">@T["nav.catalog"]</a>
+    </div>
+}
+else
+{
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+        @foreach (var b in Model.Items)
+        {
+            <div class="col">
+                <partial name="_BookCard" model="b" />
+                <form asp-action="Remove" method="post" class="mt-2">
+                    <input type="hidden" name="bookId" value="@b.Id" />
+                    <button type="submit" class="btn btn-sm btn-outline-secondary w-100">@T["wish.remove"]</button>
+                </form>
+            </div>
+        }
+    </div>
+}

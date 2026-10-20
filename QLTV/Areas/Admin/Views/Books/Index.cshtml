@@ -1,0 +1,91 @@
+@model BookIndexVm
+@using System.Globalization
+@{
+    ViewData["Title"] = "Đầu sách";
+    var vi = new CultureInfo("vi-VN");
+    var pager = new PagerVm { Page = Model.Result.Page, TotalPages = Model.Result.TotalPages };
+    if (!string.IsNullOrEmpty(Model.Search)) { pager.RouteValues["search"] = Model.Search; }
+    if (Model.CategoryId.HasValue) { pager.RouteValues["categoryId"] = Model.CategoryId.Value.ToString(); }
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4 m-0">Đầu sách <span class="text-muted fs-6">(@Model.Result.TotalItems.ToString("N0", vi) kết quả)</span></h2>
+    <a asp-action="Create" class="btn btn-primary">+ Thêm sách</a>
+</div>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-5">
+        <input name="search" value="@Model.Search" class="form-control" placeholder="Tìm theo tên sách, ISBN hoặc tác giả..." />
+    </div>
+    <div class="col-md-3">
+        <select name="categoryId" class="form-select">
+            <option value="">Tất cả thể loại</option>
+            @foreach (var c in Model.Categories)
+            {
+                <option value="@c.Value" selected="@c.Selected">@c.Text</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-secondary">Lọc</button>
+        @if (!string.IsNullOrEmpty(Model.Search) || Model.CategoryId.HasValue)
+        {
+            <a asp-action="Index" class="btn btn-link">Xóa lọc</a>
+        }
+    </div>
+</form>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr>
+            <th style="width:56px"></th>
+            <th>Tên sách</th>
+            <th>Tác giả</th>
+            <th>Thể loại</th>
+            <th class="text-end">Phí thuê</th>
+            <th class="text-center">Sẵn sàng / Tổng</th>
+            <th style="width:140px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Result.Items)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.CoverImagePath))
+                    {
+                        <img src="@item.CoverImagePath" alt="" style="width:36px;height:50px;object-fit:cover;border-radius:4px" />
+                    }
+                    else
+                    {
+                        <div style="width:36px;height:50px;background:#e9ecef;border-radius:4px"></div>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none fw-semibold">@item.Title</a>
+                    @if (!item.IsActive)
+                    {
+                        <span class="badge text-bg-secondary ms-1">Ngừng</span>
+                    }
+                    <div class="text-muted small">ISBN @item.ISBN</div>
+                </td>
+                <td>@item.AuthorName</td>
+                <td>@item.CategoryName</td>
+                <td class="text-end">@(item.RentalFee == 0 ? "Miễn phí" : item.RentalFee.ToString("N0", vi) + " đ")</td>
+                <td class="text-center">
+                    <span class="@(item.AvailableCopies == 0 ? "text-danger" : "")">@item.AvailableCopies</span> / @item.TotalCopies
+                </td>
+                <td class="text-end">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Chi tiết</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Sửa</a>
+                </td>
+            </tr>
+        }
+        @if (!Model.Result.Items.Any())
+        {
+            <tr><td colspan="7" class="text-center text-muted py-4">Không có sách nào phù hợp.</td></tr>
+        }
+    </tbody>
+</table>
+
+<partial name="_Pager" model="pager" />

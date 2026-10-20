@@ -1,0 +1,55 @@
+@model MyProfileVm
+@{
+    ViewData["Title"] = T["profile.title"];
+}
+
+<div class="row g-4">
+    <div class="col-md-3"><partial name="_Menu" /></div>
+
+    <div class="col-md-9">
+        <h1 class="h4 mb-3">@T["profile.title"]</h1>
+
+        <form asp-action="Profile" method="post" style="max-width:560px">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">@T["my.membercode"]</label>
+                    <div class="form-control-plaintext font-monospace">@Model.MemberCode</div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">@T["Số điện thoại"]</label>
+                    <div class="form-control-plaintext">@Model.Phone</div>
+                    <div class="form-text">@T["profile.phone.help"]</div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="FullName" class="form-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DateOfBirth" class="form-label"></label>
+                <input asp-for="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Address" class="form-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">@T["profile.save"]</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

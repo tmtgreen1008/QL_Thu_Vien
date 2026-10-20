@@ -1,0 +1,12 @@
+@{
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+    string Active(string a) => action == a ? "active" : "";
+}
+<div class="list-group account-menu mb-3">
+    <a class="list-group-item list-group-item-action @Active("Index")" asp-controller="My" asp-action="Index">@T["my.menu.overview"]</a>
+    <a class="list-group-item list-group-item-action @Active("Loans")" asp-controller="My" asp-action="Loans">@T["my.menu.loans"]</a>
+    <a class="list-group-item list-group-item-action @Active("History")" asp-controller="My" asp-action="History">@T["my.menu.history"]</a>
+    <a class="list-group-item list-group-item-action @Active("Payments")" asp-controller="My" asp-action="Payments">@T["my.menu.payments"]</a>
+    <a class="list-group-item list-group-item-action @Active("Profile")" asp-controller="My" asp-action="Profile">@T["my.menu.profile"]</a>
+    <a class="list-group-item list-group-item-action" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">@T["my.menu.password"]</a>
+</div>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="nav.home" xml:space="preserve"><value>Home</value></data>
+  <data name="nav.catalog" xml:space="preserve"><value>Browse books</value></data>
+  <data name="nav.pricing" xml:space="preserve"><value>Membership plans</value></data>
+  <data name="nav.wishlist" xml:space="preserve"><value>Wishlist</value></data>
+  <data name="nav.account" xml:space="preserve"><value>My account</value></data>
+  <data name="nav.admin" xml:space="preserve"><value>Admin</value></data>
+  <data name="nav.menu" xml:space="preserve"><value>Toggle menu</value></data>
+  <data name="brand" xml:space="preserve"><value>Library</value></data>
+  <data name="common.close" xml:space="preserve"><value>Close</value></data>
+  <data name="footer.copy" xml:space="preserve"><value>© {0} Library · Open daily 8:00 - 21:00</value></data>
+  <data name="currency" xml:space="preserve"><value>VND</value></data>
+  <data name="pager.prev" xml:space="preserve"><value>Previous</value></data>
+  <data name="pager.next" xml:space="preserve"><value>Next</value></data>
+  <data name="pager.label" xml:space="preserve"><value>Pagination</value></data>
+  <data name="auth.hello" xml:space="preserve"><value>Hello, {0}</value></data>
+  <data name="auth.account" xml:space="preserve"><value>Account</value></data>
+  <data name="auth.logout" xml:space="preserve"><value>Log out</value></data>
+  <data name="auth.register" xml:space="preserve"><value>Register</value></data>
+  <data name="auth.login" xml:space="preserve"><value>Log in</value></data>
+  <data name="error.title" xml:space="preserve"><value>Something went wrong</value></data>
+  <data name="error.text" xml:space="preserve"><value>The system hit a problem processing your request. Please try again later.</value></data>
+  <data name="home.hero.title" xml:space="preserve"><value>Find your next read</value></data>
+  <data name="home.hero.sub" xml:space="preserve"><value>Read in the library or borrow to take home. Search quickly and check availability before you visit.</value></data>
+  <data name="home.search.ph" xml:space="preserve"><value>Title, author or ISBN...</value></data>
+  <data name="home.search.btn" xml:space="preserve"><value>Search</value></data>
+  <data name="home.stat.titles" xml:space="preserve"><value>Titles</value></data>
+  <data name="home.stat.copies" xml:space="preserve"><value>Copies in stock</value></data>
+  <data name="home.stat.categories" xml:space="preserve"><value>Categories</value></data>
+  <data name="home.stat.hours" xml:space="preserve"><value>Open every day</value></data>
+  <data name="home.categories" xml:space="preserve"><value>Categories</value></data>
+  <data name="home.recent" xml:space="preserve"><value>Recently viewed</value></data>
+  <data name="home.latest" xml:space="preserve"><value>New arrivals</value></data>
+  <data name="home.viewall" xml:space="preserve"><value>View all</value></data>
+  <data name="home.cta.title" xml:space="preserve"><value>Want to borrow books?</value></data>
+  <data name="home.cta.text" xml:space="preserve"><value>Create an account and buy a membership at the counter to start borrowing.</value></data>
+  <data name="book.available" xml:space="preserve"><value>{0} available</value></data>
+  <data name="book.onsite" xml:space="preserve"><value>In-library only</value></data>
+  <data name="book.unavailable" xml:space="preserve"><value>Unavailable</value></data>
+  <data name="book.cover.alt" xml:space="preserve"><value>Cover of {0}</value></data>
+  <data name="catalog.title" xml:space="preserve"><value>Browse books</value></data>
+  <data name="catalog.keyword" xml:space="preserve"><value>Keyword</value></data>
+  <data name="catalog.keyword.ph" xml:space="preserve"><value>Title, author, ISBN...</value></data>
+  <data name="catalog.category" xml:space="preserve"><value>Category</value></data>
+  <data name="catalog.category.all" xml:space="preserve"><value>All categories</value></data>
+  <data name="catalog.sort" xml:space="preserve"><value>Sort by</value></data>
+  <data name="catalog.sort.title" xml:space="preserve"><value>Title A → Z</value></data>
+  <data name="catalog.sort.new" xml:space="preserve"><value>Newest</value></data>
+  <data name="catalog.availableOnly" xml:space="preserve"><value>Available to borrow only</value></data>
+  <data name="catalog.filter" xml:space="preserve"><value>Filter</value></data>
+  <data name="catalog.found.prefix" xml:space="preserve"><value>Found</value></data>
+  <data name="catalog.found.suffix" xml:space="preserve"><value>titles</value></data>
+  <data name="catalog.clear" xml:space="preserve"><value>Clear filters</value></data>
+  <data name="catalog.empty" xml:space="preserve"><value>No books match your filters.</value></data>
+  <data name="catalog.more" xml:space="preserve"><value>Load more</value></data>
+  <data name="catalog.error" xml:space="preserve"><value>Could not load data. Please try again.</value></data>
+  <data name="details.borrowable" xml:space="preserve"><value>{0} copies available to borrow</value></data>
+  <data name="details.onsite.only" xml:space="preserve"><value>Only in-library copies available</value></data>
+  <data name="details.none" xml:space="preserve"><value>Currently unavailable</value></data>
+  <data name="details.onsite.extra" xml:space="preserve"><value>+ {0} in-library copies</value></data>
+  <data name="details.isbn" xml:space="preserve"><value>ISBN</value></data>
+  <data name="details.publisher" xml:space="preserve"><value>Publisher</value></data>
+  <data name="details.year" xml:space="preserve"><value>Year published</value></data>
+  <data name="details.pages" xml:space="preserve"><value>Pages</value></data>
+  <data name="details.fee" xml:space="preserve"><value>Rental fee</value></data>
+  <data name="details.free" xml:space="preserve"><value>Free</value></data>
+  <data name="details.copies" xml:space="preserve"><value>Total copies</value></data>
+  <data name="details.wish.add" xml:space="preserve"><value>Add to wishlist</value></data>
+  <data name="details.wish.remove" xml:space="preserve"><value>Remove from wishlist</value></data>
+  <data name="details.howto" xml:space="preserve"><value>To borrow, bring your member code to the counter.</value></data>
+  <data name="details.related" xml:space="preserve"><value>Related books</value></data>
+  <data name="pricing.title" xml:space="preserve"><value>Membership plans</value></data>
+  <data name="pricing.subtitle" xml:space="preserve"><value>Reading in the library needs no card. A membership lets you borrow books to take home.</value></data>
+  <data name="pricing.valid" xml:space="preserve"><value>valid for {0} months</value></data>
+  <data name="pricing.max" xml:space="preserve"><value>Borrow up to {0} books at once</value></data>
+  <data name="pricing.days" xml:space="preserve"><value>Keep each book for {0} days</value></data>
+  <data name="pricing.renew" xml:space="preserve"><value>Up to {0} renewals</value></data>
+  <data name="pricing.deposit" xml:space="preserve"><value>Deposit {0} (refunded when you return the card)</value></data>
+  <data name="pricing.none" xml:space="preserve"><value>No plans are currently on sale.</value></data>
+  <data name="pricing.how.title" xml:space="preserve"><value>How to join</value></data>
+  <data name="pricing.how.1" xml:space="preserve"><value>Register an account on the website (use the Register button at the top).</value></data>
+  <data name="pricing.how.2" xml:space="preserve"><value>Visit the counter; staff will sell you a card and collect the fee and deposit. You receive a member code.</value></data>
+  <data name="pricing.how.3" xml:space="preserve"><value>Borrow at the counter, then track due dates and renew online under "My account".</value></data>
+  <data name="pricing.rules.title" xml:space="preserve"><value>Good to know</value></data>
+  <data name="pricing.rules.late" xml:space="preserve"><value>Late returns are charged {0} per book per day (capped at the book's price).</value></data>
+  <data name="pricing.rules.lost" xml:space="preserve"><value>Lost or damaged books must be paid for at the book's price.</value></data>
+  <data name="pricing.rules.onsite" xml:space="preserve"><value>Some books are for in-library reading only.</value></data>
+  <data name="pricing.rules.block" xml:space="preserve"><value>You cannot borrow more while you owe money or have overdue books.</value></data>
+  <data name="wish.title" xml:space="preserve"><value>Wishlist</value></data>
+  <data name="wish.clear" xml:space="preserve"><value>Clear wishlist</value></data>
+  <data name="wish.clear.confirm" xml:space="preserve"><value>Clear your whole wishlist?</value></data>
+  <data name="wish.note" xml:space="preserve"><value>This list is kept for your current browsing session. Bring it to the counter to borrow.</value></data>
+  <data name="wish.empty" xml:space="preserve"><value>Your wishlist is empty.</value></data>
+  <data name="wish.remove" xml:space="preserve"><value>Remove</value></data>
+  <data name="wish.added" xml:space="preserve"><value>Book added to your wishlist.</value></data>
+  <data name="wish.exists" xml:space="preserve"><value>This book is already in your wishlist.</value></data>
+  <data name="wish.full" xml:space="preserve"><value>Your wishlist can hold up to {0} books.</value></data>
+  <data name="wish.removed" xml:space="preserve"><value>Book removed from your wishlist.</value></data>
+  <data name="wish.cleared" xml:space="preserve"><value>Wishlist cleared.</value></data>
+  <data name="my.menu.overview" xml:space="preserve"><value>Overview</value></data>
+  <data name="my.menu.loans" xml:space="preserve"><value>Current loans</value></data>
+  <data name="my.menu.history" xml:space="preserve"><value>Borrowing history</value></data>
+  <data name="my.menu.payments" xml:space="preserve"><value>Payments &amp; debts</value></data>
+  <data name="my.menu.profile" xml:space="preserve"><value>Profile</value></data>
+  <data name="my.menu.password" xml:space="preserve"><value>Change password</value></data>
+  <data name="my.noprofile.title" xml:space="preserve"><value>Your account has no member profile</value></data>
+  <data name="my.noprofile.text" xml:space="preserve"><value>Please visit the library counter and tell staff your login email so they can link your profile.</value></data>
+  <data name="my.home" xml:space="preserve"><value>Back to home</value></data>
+  <data name="my.hello" xml:space="preserve"><value>Hello, {0}</value></data>
+  <data name="my.membercode" xml:space="preserve"><value>Member code</value></data>
+  <data name="my.blockers.title" xml:space="preserve"><value>You cannot borrow more books right now:</value></data>
+  <data name="my.block.locked" xml:space="preserve"><value>Your account is locked.</value></data>
+  <data name="my.block.nocard" xml:space="preserve"><value>You have no valid membership card.</value></data>
+  <data name="my.block.onsiteplan" xml:space="preserve"><value>Your current plan allows in-library reading only.</value></data>
+  <data name="my.block.full" xml:space="preserve"><value>You have borrowed the maximum of {0} books for your plan.</value></data>
+  <data name="my.block.overdue" xml:space="preserve"><value>You have {0} overdue books; return them before borrowing more.</value></data>
+  <data name="my.block.unpaid" xml:space="preserve"><value>You owe {0}; please pay before borrowing more.</value></data>
+  <data name="my.duesoon" xml:space="preserve"><value>You have {0} books due within 3 days.</value></data>
+  <data name="my.duesoon.link" xml:space="preserve"><value>View and renew</value></data>
+  <data name="my.card.title" xml:space="preserve"><value>Membership card</value></data>
+  <data name="my.card.valid" xml:space="preserve"><value>Valid until {0} ({1} days left)</value></data>
+  <data name="my.card.limits" xml:space="preserve"><value>Up to {0} books · {1} days each</value></data>
+  <data name="my.card.none" xml:space="preserve"><value>No valid card</value></data>
+  <data name="my.card.none.help" xml:space="preserve"><value>Visit the counter to buy or renew a card.</value></data>
+  <data name="my.loans.count" xml:space="preserve"><value>Borrowed</value></data>
+  <data name="my.overdue.count" xml:space="preserve"><value>{0} overdue</value></data>
+  <data name="my.owed" xml:space="preserve"><value>Outstanding</value></data>
+  <data name="my.deposit" xml:space="preserve"><value>Deposit held: {0}</value></data>
+  <data name="loans.title" xml:space="preserve"><value>Current loans</value></data>
+  <data name="loans.none" xml:space="preserve"><value>You have no books on loan.</value></data>
+  <data name="loans.col.book" xml:space="preserve"><value>Book</value></data>
+  <data name="loans.col.loandate" xml:space="preserve"><value>Borrowed on</value></data>
+  <data name="loans.col.due" xml:space="preserve"><value>Due date</value></data>
+  <data name="loans.col.renewed" xml:space="preserve"><value>Renewed</value></data>
+  <data name="loans.renew" xml:space="preserve"><value>Renew</value></data>
+  <data name="loans.overdue.days" xml:space="preserve"><value>{0} days overdue</value></data>
+  <data name="loans.today" xml:space="preserve"><value>due today</value></data>
+  <data name="loans.left" xml:space="preserve"><value>{0} days left</value></data>
+  <data name="loans.return" xml:space="preserve"><value>Please return at the counter</value></data>
+  <data name="loans.norenew" xml:space="preserve"><value>No renewals left</value></data>
+  <data name="loans.note" xml:space="preserve"><value>Each renewal adds the same number of days as your plan's loan period. Overdue books cannot be renewed; please return them at the counter.</value></data>
+  <data name="loans.renewed.ok" xml:space="preserve"><value>Renewed "{0}" for {1} more days; new due date {2}.</value></data>
+  <data name="loans.renewed.fail" xml:space="preserve"><value>Could not renew "{0}": {1}</value></data>
+  <data name="loans.err.title" xml:space="preserve"><value>Cannot renew</value></data>
+  <data name="renew.err.returned" xml:space="preserve"><value>This book has already been returned.</value></data>
+  <data name="renew.err.locked" xml:space="preserve"><value>Your account is locked.</value></data>
+  <data name="renew.err.nocard" xml:space="preserve"><value>You have no valid card.</value></data>
+  <data name="renew.err.item_overdue" xml:space="preserve"><value>This book is overdue and cannot be renewed. Please return it.</value></data>
+  <data name="renew.err.other_overdue" xml:space="preserve"><value>You have other overdue books.</value></data>
+  <data name="renew.err.max_renewals" xml:space="preserve"><value>Maximum of {0} renewals reached.</value></data>
+  <data name="js.session" xml:space="preserve"><value>Your session has expired. Please log in again.</value></data>
+  <data name="js.renew.fail" xml:space="preserve"><value>Could not renew. Please try again.</value></data>
+  <data name="history.title" xml:space="preserve"><value>Borrowing history</value></data>
+  <data name="history.col.returned" xml:space="preserve"><value>Returned on</value></data>
+  <data name="history.col.result" xml:space="preserve"><value>Result</value></data>
+  <data name="history.lost" xml:space="preserve"><value>Lost</value></data>
+  <data name="history.returned" xml:space="preserve"><value>Returned</value></data>
+  <data name="history.none" xml:space="preserve"><value>No history yet.</value></data>
+  <data name="pay.title" xml:space="preserve"><value>Payments &amp; debts</value></data>
+  <data name="pay.debt" xml:space="preserve"><value>You owe {0}. Please pay at the counter to keep borrowing.</value></data>
+  <data name="pay.col.receipt" xml:space="preserve"><value>Receipt</value></data>
+  <data name="pay.col.date" xml:space="preserve"><value>Date</value></data>
+  <data name="pay.col.type" xml:space="preserve"><value>Type</value></data>
+  <data name="pay.col.amount" xml:space="preserve"><value>Amount</value></data>
+  <data name="pay.col.method" xml:space="preserve"><value>Method</value></data>
+  <data name="pay.col.status" xml:space="preserve"><value>Status</value></data>
+  <data name="pay.none" xml:space="preserve"><value>No transactions yet.</value></data>
+  <data name="paytype.MembershipFee" xml:space="preserve"><value>Membership fee</value></data>
+  <data name="paytype.Deposit" xml:space="preserve"><value>Deposit</value></data>
+  <data name="paytype.DepositRefund" xml:space="preserve"><value>Deposit refund</value></data>
+  <data name="paytype.RentalFee" xml:space="preserve"><value>Rental fee</value></data>
+  <data name="paytype.LateFine" xml:space="preserve"><value>Late fee</value></data>
+  <data name="paytype.Compensation" xml:space="preserve"><value>Compensation</value></data>
+  <data name="paymethod.Cash" xml:space="preserve"><value>Cash</value></data>
+  <data name="paymethod.Transfer" xml:space="preserve"><value>Bank transfer</value></data>
+  <data name="paystatus.Paid" xml:space="preserve"><value>Paid</value></data>
+  <data name="paystatus.Unpaid" xml:space="preserve"><value>Unpaid</value></data>
+  <data name="paystatus.Voided" xml:space="preserve"><value>Voided</value></data>
+  <data name="profile.title" xml:space="preserve"><value>Profile</value></data>
+  <data name="profile.phone.help" xml:space="preserve"><value>To change your phone number, please visit the counter.</value></data>
+  <data name="profile.save" xml:space="preserve"><value>Save changes</value></data>
+  <data name="profile.saved" xml:space="preserve"><value>Profile updated.</value></data>
+  <data name="profile.dob.future" xml:space="preserve"><value>Date of birth cannot be in the future.</value></data>
+  <data name="reg.title" xml:space="preserve"><value>Create an account</value></data>
+  <data name="reg.subtitle" xml:space="preserve"><value>Create an account to see your card and loans and renew online.</value></data>
+  <data name="reg.membercode.help" xml:space="preserve"><value>Already registered at the counter? Enter your member code and the phone number on file to link your existing card.</value></data>
+  <data name="reg.submit" xml:space="preserve"><value>Register</value></data>
+  <data name="reg.haveaccount" xml:space="preserve"><value>Already have an account?</value></data>
+  <data name="reg.err.mismatch" xml:space="preserve"><value>The member code and phone number do not match, or this profile is already linked to another account.</value></data>
+  <data name="reg.err.phoneexists" xml:space="preserve"><value>This phone number already has a profile at the library. Enter your member code (printed on your membership receipt) to link it, or visit the counter.</value></data>
+  <data name="login.title" xml:space="preserve"><value>Log in</value></data>
+  <data name="login.submit" xml:space="preserve"><value>Log in</value></data>
+  <data name="login.noaccount" xml:space="preserve"><value>No account yet?</value></data>
+  <data name="login.err.invalid" xml:space="preserve"><value>Incorrect email or password.</value></data>
+  <data name="login.err.locked" xml:space="preserve"><value>Your account is temporarily locked after too many failed attempts. Try again in {0} minutes.</value></data>
+  <data name="login.err.disabled" xml:space="preserve"><value>This account has been disabled. Please contact the library.</value></data>
+  <data name="Họ và tên" xml:space="preserve"><value>Full name</value></data>
+  <data name="Vui lòng nhập họ tên" xml:space="preserve"><value>Please enter your full name</value></data>
+  <data name="Email (dùng để đăng nhập)" xml:space="preserve"><value>Email (used to log in)</value></data>
+  <data name="Vui lòng nhập email" xml:space="preserve"><value>Please enter your email</value></data>
+  <data name="Email không hợp lệ" xml:space="preserve"><value>Invalid email address</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Số điện thoại" xml:space="preserve"><value>Phone number</value></data>
+  <data name="Vui lòng nhập số điện thoại" xml:space="preserve"><value>Please enter your phone number</value></data>
+  <data name="Số điện thoại không hợp lệ (ví dụ 0901234567)" xml:space="preserve"><value>Invalid phone number (e.g. 0901234567)</value></data>
+  <data name="Mã thành viên (nếu đã có thẻ tại quầy)" xml:space="preserve"><value>Member code (if you already have a card at the counter)</value></data>
+  <data name="Mật khẩu" xml:space="preserve"><value>Password</value></data>
+  <data name="Vui lòng nhập mật khẩu" xml:space="preserve"><value>Please enter a password</value></data>
+  <data name="Mật khẩu từ 6 ký tự trở lên" xml:space="preserve"><value>Password must be at least 6 characters</value></data>
+  <data name="Nhập lại mật khẩu" xml:space="preserve"><value>Confirm password</value></data>
+  <data name="Mật khẩu xác nhận không khớp" xml:space="preserve"><value>The confirmation password does not match</value></data>
+  <data name="Ghi nhớ đăng nhập" xml:space="preserve"><value>Remember me</value></data>
+  <data name="Email liên hệ" xml:space="preserve"><value>Contact email</value></data>
+  <data name="Địa chỉ" xml:space="preserve"><value>Address</value></data>
+  <data name="Ngày sinh" xml:space="preserve"><value>Date of birth</value></data>
+</root>

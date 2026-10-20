@@ -1,0 +1,62 @@
+@model LoanIndexVm
+@{
+    ViewData["Title"] = "Phiếu mượn";
+    var pager = new PagerVm { Page = Model.Result.Page, TotalPages = Model.Result.TotalPages };
+    if (!string.IsNullOrEmpty(Model.Search)) { pager.RouteValues["search"] = Model.Search; }
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4 m-0">Phiếu mượn <span class="text-muted fs-6">(@Model.Result.TotalItems)</span></h2>
+    <a asp-action="Create" class="btn btn-primary">+ Cho mượn sách</a>
+</div>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-5">
+        <input name="search" value="@Model.Search" class="form-control" placeholder="Tìm theo tên, mã hoặc số điện thoại khách..." />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-secondary">Tìm</button>
+        @if (!string.IsNullOrEmpty(Model.Search)) { <a asp-action="Index" class="btn btn-link">Xóa lọc</a> }
+    </div>
+</form>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr>
+            <th>Số phiếu</th>
+            <th>Ngày mượn</th>
+            <th>Khách</th>
+            <th class="text-center">Số cuốn</th>
+            <th class="text-center">Chưa trả</th>
+            <th>Lập bởi</th>
+            <th style="width:90px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var l in Model.Result.Items)
+        {
+            <tr>
+                <td class="font-monospace">PM@(l.Id.ToString("D5"))</td>
+                <td>@l.LoanDate.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@l.MemberName <span class="text-muted font-monospace small">@l.MemberCode</span></td>
+                <td class="text-center">@l.ItemCount</td>
+                <td class="text-center">
+                    @if (l.OpenCount == 0) { <span class="text-muted">0</span> }
+                    else
+                    {
+                        <span>@l.OpenCount</span>
+                        @if (l.OverdueCount > 0) { <span class="badge text-bg-danger ms-1">@l.OverdueCount quá hạn</span> }
+                    }
+                </td>
+                <td>@l.AdminName</td>
+                <td class="text-end"><a asp-action="Details" asp-route-id="@l.Id" class="btn btn-sm btn-outline-secondary">Chi tiết</a></td>
+            </tr>
+        }
+        @if (!Model.Result.Items.Any())
+        {
+            <tr><td colspan="7" class="text-center text-muted py-4">Chưa có phiếu mượn nào.</td></tr>
+        }
+    </tbody>
+</table>
+
+<partial name="_Pager" model="pager" />

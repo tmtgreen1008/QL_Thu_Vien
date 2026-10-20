@@ -1,0 +1,49 @@
+@model MyPaymentsVm
+@{
+    ViewData["Title"] = T["pay.title"];
+    string Money(decimal v) => v.ToString("N0") + " " + T["currency"];
+    var pager = new PagerVm { Page = Model.Result.Page, TotalPages = Model.Result.TotalPages };
+}
+
+<div class="row g-4">
+    <div class="col-md-3"><partial name="_Menu" /></div>
+
+    <div class="col-md-9">
+        <h1 class="h4 mb-3">@T["pay.title"]</h1>
+
+        @if (Model.UnpaidTotal > 0)
+        {
+            <div class="alert alert-danger">@T["pay.debt", Money(Model.UnpaidTotal)]</div>
+        }
+
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>@T["pay.col.receipt"]</th><th>@T["pay.col.date"]</th><th>@T["pay.col.type"]</th>
+                        <th class="text-end">@T["pay.col.amount"]</th><th>@T["pay.col.method"]</th><th>@T["pay.col.status"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.Result.Items)
+                    {
+                        <tr class="@(p.Status == PaymentStatus.Voided ? "text-muted" : "")">
+                            <td class="font-monospace">@p.ReceiptNo</td>
+                            <td>@p.When.ToString("d")</td>
+                            <td>@T["paytype." + p.Type]</td>
+                            <td class="text-end @(p.Amount < 0 ? "text-danger" : "")">@Money(p.Amount)</td>
+                            <td>@T["paymethod." + p.Method]</td>
+                            <td><span class="badge text-bg-@PaymentLabels.StatusBadge(p.Status)">@T["paystatus." + p.Status]</span></td>
+                        </tr>
+                    }
+                    @if (!Model.Result.Items.Any())
+                    {
+                        <tr><td colspan="6" class="text-center text-muted py-4">@T["pay.none"]</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <partial name="_Pager" model="pager" />
+    </div>
+</div>

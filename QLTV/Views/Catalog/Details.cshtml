@@ -1,0 +1,89 @@
+@model CatalogDetailsVm
+@{
+    var b = Model.Book;
+    ViewData["Title"] = b.Title;
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-action="Index">@T["catalog.title"]</a></li>
+        <li class="breadcrumb-item"><a asp-action="Index" asp-route-categoryId="@b.CategoryId">@b.Category?.Name</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@b.Title</li>
+    </ol>
+</nav>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4 col-lg-3">
+        <div class="card book-card">
+            <div class="book-cover" style="border-radius:.375rem">
+                @if (!string.IsNullOrEmpty(b.CoverImagePath))
+                {
+                    <img src="@b.CoverImagePath" alt="@T["book.cover.alt", b.Title]" />
+                }
+                else
+                {
+                    <div class="cover-placeholder" style="background:hsl(@(b.Id * 47 % 360), 50%, 48%)">@(b.Title.Length > 0 ? b.Title[0].ToString().ToUpper() : "?")</div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 col-lg-9">
+        <h1 class="h3 mb-1">@b.Title</h1>
+        <div class="text-muted mb-3">@b.Author?.Name · @b.Category?.Name</div>
+
+        <div class="mb-3">
+            @if (Model.Borrowable > 0)
+            {
+                <span class="badge text-bg-success fs-6">@T["details.borrowable", Model.Borrowable]</span>
+            }
+            else if (Model.ReadOnSite > 0)
+            {
+                <span class="badge text-bg-info fs-6">@T["details.onsite.only"]</span>
+            }
+            else
+            {
+                <span class="badge text-bg-secondary fs-6">@T["details.none"]</span>
+            }
+            @if (Model.ReadOnSite > 0 && Model.Borrowable > 0)
+            {
+                <span class="badge text-bg-info fs-6">@T["details.onsite.extra", Model.ReadOnSite]</span>
+            }
+        </div>
+
+        <table class="table table-sm mb-3" style="max-width:520px">
+            <tr><th style="width:150px">@T["details.isbn"]</th><td>@b.ISBN</td></tr>
+            <tr><th>@T["details.publisher"]</th><td>@(b.Publisher ?? "—")</td></tr>
+            <tr><th>@T["details.year"]</th><td>@(b.PublishYear?.ToString() ?? "—")</td></tr>
+            <tr><th>@T["details.pages"]</th><td>@(b.PageCount?.ToString() ?? "—")</td></tr>
+            <tr><th>@T["details.fee"]</th><td>@(b.RentalFee == 0 ? T["details.free"] : b.RentalFee.ToString("N0") + " " + T["currency"])</td></tr>
+            <tr><th>@T["details.copies"]</th><td>@Model.TotalCopies</td></tr>
+        </table>
+
+        @if (!string.IsNullOrWhiteSpace(b.Description))
+        {
+            <p>@b.Description</p>
+        }
+
+        <form asp-controller="Wishlist" asp-action="@(Model.InWishlist ? "Remove" : "Add")" method="post" class="d-inline">
+            <input type="hidden" name="bookId" value="@b.Id" />
+            <input type="hidden" name="returnUrl" value="@returnUrl" />
+            <button type="submit" class="btn @(Model.InWishlist ? "btn-outline-secondary" : "btn-primary")">
+                @(Model.InWishlist ? T["details.wish.remove"] : T["details.wish.add"])
+            </button>
+        </form>
+        <p class="text-muted small mt-3">@T["details.howto"] <a asp-controller="Pricing" asp-action="Index">@T["nav.pricing"]</a></p>
+    </div>
+</div>
+
+@if (Model.Related.Any())
+{
+    <h2 class="h5 section-title mb-2">@T["details.related"]</h2>
+    <div class="row row-cols-2 row-cols-md-4 g-3">
+        @foreach (var r in Model.Related)
+        {
+            <div class="col"><partial name="_BookCard" model="r" /></div>
+        }
+    </div>
+}

@@ -1,0 +1,41 @@
+@model MyHistoryVm
+@{
+    ViewData["Title"] = T["history.title"];
+    var pager = new PagerVm { Page = Model.Result.Page, TotalPages = Model.Result.TotalPages };
+}
+
+<div class="row g-4">
+    <div class="col-md-3"><partial name="_Menu" /></div>
+
+    <div class="col-md-9">
+        <h1 class="h4 mb-3">@T["history.title"] <span class="text-muted fs-6">(@Model.Result.TotalItems)</span></h1>
+
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr><th>@T["loans.col.book"]</th><th>@T["loans.col.loandate"]</th><th>@T["history.col.returned"]</th><th>@T["history.col.result"]</th></tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.Result.Items)
+                    {
+                        <tr>
+                            <td>@r.Title</td>
+                            <td>@r.LoanDate.ToString("d")</td>
+                            <td>@(r.ReturnedAt.HasValue ? r.ReturnedAt.Value.ToString("d") : "—")</td>
+                            <td>
+                                @if (r.Lost) { <span class="badge text-bg-dark">@T["history.lost"]</span> }
+                                else { <span class="badge text-bg-success">@T["history.returned"]</span> }
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Result.Items.Any())
+                    {
+                        <tr><td colspan="4" class="text-center text-muted py-4">@T["history.none"]</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <partial name="_Pager" model="pager" />
+    </div>
+</div>

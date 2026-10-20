@@ -1,0 +1,51 @@
+@model InventoryVm
+@using System.Globalization
+@{
+    ViewData["Title"] = "Kho sách";
+    ViewData["Tab"] = "inventory";
+    var vi = new CultureInfo("vi-VN");
+    string Money(decimal v) => v.ToString("N0", vi) + " đ";
+}
+
+<h2 class="h4 mb-3">Báo cáo</h2>
+<partial name="_ReportNav" />
+
+<div class="row g-4">
+    <div class="col-lg-6">
+        <h3 class="h5">Bản sao theo trạng thái <span class="text-muted fs-6">(tổng @Model.TotalCopies)</span></h3>
+        <table class="table table-sm align-middle">
+            <thead><tr><th>Trạng thái</th><th class="text-end">Số bản</th><th class="text-end">Tổng giá nhập</th></tr></thead>
+            <tbody>
+                @foreach (var s in Model.Statuses)
+                {
+                    <tr>
+                        <td><span class="badge text-bg-@s.Badge">@s.Label</span></td>
+                        <td class="text-end">@s.Count</td>
+                        <td class="text-end">@Money(s.PurchaseValue)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="alert alert-light border">
+            Sách mất hoặc hỏng: <strong>@Model.LostDamagedCount</strong> bản,
+            giá trị theo giá đền <strong>@Money(Model.LostDamagedValue)</strong>.
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <h3 class="h5">Theo thể loại</h3>
+        <table class="table table-sm align-middle">
+            <thead><tr><th>Thể loại</th><th class="text-end">Đầu sách</th><th class="text-end">Bản sao</th></tr></thead>
+            <tbody>
+                @foreach (var c in Model.Categories)
+                {
+                    <tr><td>@c.Name</td><td class="text-end">@c.Titles</td><td class="text-end">@c.Copies</td></tr>
+                }
+                @if (!Model.Categories.Any())
+                {
+                    <tr><td colspan="3" class="text-center text-muted py-3">Chưa có dữ liệu.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+@model EditCopyVm
+@{
+    ViewData["Title"] = "Sửa bản sao";
+}
+
+<h2 class="h4 mb-1">Sửa bản sao</h2>
+<p class="text-muted">
+    Sách: <a asp-controller="Books" asp-action="Details" asp-route-id="@Model.BookId">@Model.BookTitle</a>
+    · Mã vạch: <strong class="font-monospace">@Model.Barcode</strong>
+</p>
+
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" style="max-width:640px">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="Status" class="form-label"></label>
+            @if (Model.IsOnLoan)
+            {
+                <div><span class="badge text-bg-primary">Đang mượn</span></div>
+                <div class="form-text">Bản sao đang cho mượn, trả sách tại quầy trước khi đổi trạng thái.</div>
+            }
+            else
+            {
+                <select asp-for="Status" asp-items="EnumLabels.StatusOptions(Model.Status)" class="form-select"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            }
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Condition" class="form-label"></label>
+            <select asp-for="Condition" asp-items="EnumLabels.ConditionOptions(Model.Condition)" class="form-select"></select>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="ShelfLocation" class="form-label"></label>
+            <input asp-for="ShelfLocation" class="form-control" />
+            <span asp-validation-for="ShelfLocation" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="PurchasePrice" class="form-label"></label>
+            <input asp-for="PurchasePrice" type="number" min="0" step="1000" class="form-control" />
+            <span asp-validation-for="PurchasePrice" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="AcquiredDate" class="form-label"></label>
+            <input asp-for="AcquiredDate" class="form-control" />
+        </div>
+        <div class="col-12">
+            <div class="form-check">
+                <input asp-for="ReadOnSiteOnly" class="form-check-input" />
+                <label asp-for="ReadOnSiteOnly" class="form-check-label"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+        <a asp-controller="Books" asp-action="Details" asp-route-id="@Model.BookId" class="btn btn-outline-secondary">Hủy</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,94 @@
+@model Book
+@using System.Globalization
+@using LibraryManagement.Models.Enums
+@{
+    ViewData["Title"] = Model.Title;
+    var vi = new CultureInfo("vi-VN");
+    var copies = Model.Copies.OrderBy(c => c.Barcode).ToList();
+    var available = copies.Count(c => c.Status == CopyStatus.Available);
+}
+
+<div class="d-flex justify-content-between align-items-start mb-3">
+    <div>
+        <a asp-action="Index" class="text-decoration-none small">← Danh sách sách</a>
+        <h2 class="h4 mt-1 mb-0">@Model.Title
+            @if (!Model.IsActive) { <span class="badge text-bg-secondary ms-1">Ngừng kinh doanh</span> }
+        </h2>
+    </div>
+    <div class="d-flex gap-2">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Sửa</a>
+        @if (!copies.Any())
+        {
+            <form asp-action="Delete" asp-route-id="@Model.Id" method="post"
+                  onsubmit="return confirm('Bạn chắc chắn muốn xóa sách này?');">
+                <button type="submit" class="btn btn-outline-danger">Xóa</button>
+            </form>
+        }
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        @if (!string.IsNullOrEmpty(Model.CoverImagePath))
+        {
+            <img src="@Model.CoverImagePath" alt="Ảnh bìa" class="img-fluid rounded border" />
+        }
+        else
+        {
+            <div class="d-flex align-items-center justify-content-center bg-light border rounded text-muted" style="height:260px">Chưa có ảnh bìa</div>
+        }
+    </div>
+    <div class="col-md-9">
+        <table class="table table-sm mb-3" style="max-width:640px">
+            <tr><th style="width:170px">Tác giả</th><td>@Model.Author?.Name</td></tr>
+            <tr><th>Thể loại</th><td>@Model.Category?.Name</td></tr>
+            <tr><th>ISBN</th><td>@Model.ISBN</td></tr>
+            <tr><th>Nhà xuất bản</th><td>@(Model.Publisher ?? "—")</td></tr>
+            <tr><th>Năm xuất bản</th><td>@(Model.PublishYear?.ToString() ?? "—")</td></tr>
+            <tr><th>Số trang</th><td>@(Model.PageCount?.ToString() ?? "—")</td></tr>
+            <tr><th>Phí thuê</th><td>@(Model.RentalFee == 0 ? "Miễn phí" : Model.RentalFee.ToString("N0", vi) + " đ")</td></tr>
+            <tr><th>Giá đền khi mất/hỏng</th><td>@Model.ReplacementPrice.ToString("N0", vi) đ</td></tr>
+        </table>
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <p class="text-muted">@Model.Description</p>
+        }
+    </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h3 class="h5 m-0">Bản sao <span class="text-muted fs-6">(@available sẵn sàng / @copies.Count)</span></h3>
+    <a asp-controller="BookCopies" asp-action="Create" asp-route-bookId="@Model.Id" class="btn btn-primary btn-sm">+ Thêm bản sao</a>
+</div>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr>
+            <th>Mã vạch</th>
+            <th>Trạng thái</th>
+            <th>Tình trạng</th>
+            <th>Vị trí kệ</th>
+            <th>Cách dùng</th>
+            <th style="width:90px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in copies)
+        {
+            <tr>
+                <td class="font-monospace">@c.Barcode</td>
+                <td><span class="badge text-bg-@EnumLabels.StatusBadge(c.Status)">@EnumLabels.Status(c.Status)</span></td>
+                <td>@EnumLabels.Condition(c.Condition)</td>
+                <td>@(c.ShelfLocation ?? "—")</td>
+                <td>@(c.ReadOnSiteOnly ? "Chỉ đọc tại chỗ" : "Được mượn về")</td>
+                <td class="text-end">
+                    <a asp-controller="BookCopies" asp-action="Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">Sửa</a>
+                </td>
+            </tr>
+        }
+        @if (!copies.Any())
+        {
+            <tr><td colspan="6" class="text-center text-muted py-4">Chưa có bản sao nào. Bấm "Thêm bản sao" để nhập sách vào kho.</td></tr>
+        }
+    </tbody>
+</table>

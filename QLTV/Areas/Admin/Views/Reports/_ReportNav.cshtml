@@ -1,0 +1,10 @@
+@{
+    var tab = ViewData["Tab"] as string;
+}
+<ul class="nav nav-tabs mb-3">
+    <li class="nav-item"><a class="nav-link @(tab == "revenue" ? "active" : "")" asp-action="Revenue">Doanh thu</a></li>
+    <li class="nav-item"><a class="nav-link @(tab == "overdue" ? "active" : "")" asp-action="Overdue">Sách quá hạn</a></li>
+    <li class="nav-item"><a class="nav-link @(tab == "top" ? "active" : "")" asp-action="TopBooks">Sách mượn nhiều / tồn lâu</a></li>
+    <li class="nav-item"><a class="nav-link @(tab == "expiring" ? "active" : "")" asp-action="Expiring">Thẻ sắp hết hạn</a></li>
+    <li class="nav-item"><a class="nav-link @(tab == "inventory" ? "active" : "")" asp-action="Inventory">Kho sách</a></li>
+</ul>

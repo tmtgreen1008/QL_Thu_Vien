@@ -1,0 +1,44 @@
+@model RefundVm
+@using System.Globalization
+@{
+    ViewData["Title"] = "Hoàn cọc, hủy thẻ";
+    var vi = new CultureInfo("vi-VN");
+    string Money(decimal v) => v.ToString("N0", vi) + " đ";
+}
+
+<h2 class="h4 mb-1">Hoàn cọc và hủy thẻ</h2>
+<p class="text-muted">
+    Khách: <a asp-controller="Members" asp-action="Details" asp-route-id="@Model.MemberId">@Model.MemberName</a>
+    <span class="font-monospace">(@Model.MemberCode)</span>
+</p>
+
+<table class="table table-sm" style="max-width:520px">
+    <tr><th>Số thẻ đang hiệu lực</th><td>@Model.ActiveCards</td></tr>
+    <tr><th>Tiền cọc sẽ hoàn</th><td class="fw-semibold">@Money(Model.HeldDeposit)</td></tr>
+    <tr><th>Sách chưa trả</th><td class="@(Model.OpenLoanItems > 0 ? "text-danger" : "")">@Model.OpenLoanItems</td></tr>
+    <tr><th>Khoản còn nợ</th><td class="@(Model.UnpaidTotal > 0 ? "text-danger" : "")">@Money(Model.UnpaidTotal)</td></tr>
+</table>
+
+@if (Model.CanProceed)
+{
+    <div class="alert alert-warning" style="max-width:640px">
+        Tất cả thẻ của khách sẽ bị hủy và <strong>không hoàn tác được</strong>. Khách cần mua thẻ mới nếu muốn mượn lại.
+    </div>
+    <form asp-action="Refund" asp-route-memberId="@Model.MemberId" method="post" style="max-width:420px">
+        <div class="mb-3">
+            <label class="form-label" for="method">Hình thức hoàn tiền</label>
+            <select id="method" name="method" asp-items="PaymentLabels.MethodOptions(null)" class="form-select"></select>
+        </div>
+        <button type="submit" class="btn btn-warning" onclick="return confirm('Xác nhận hoàn cọc và hủy thẻ?');">Xác nhận hoàn cọc</button>
+        <a asp-controller="Members" asp-action="Details" asp-route-id="@Model.MemberId" class="btn btn-outline-secondary">Quay lại</a>
+    </form>
+}
+else
+{
+    <div class="alert alert-danger" style="max-width:640px">
+        @if (Model.OpenLoanItems > 0) { <div>Khách còn @Model.OpenLoanItems cuốn sách chưa trả.</div> }
+        @if (Model.UnpaidTotal > 0) { <div>Khách còn nợ @Money(Model.UnpaidTotal).</div> }
+        @if (Model.OpenLoanItems == 0 && Model.UnpaidTotal == 0) { <div>Khách không có thẻ hay tiền cọc nào để xử lý.</div> }
+    </div>
+    <a asp-controller="Members" asp-action="Details" asp-route-id="@Model.MemberId" class="btn btn-outline-secondary">Quay lại</a>
+}
